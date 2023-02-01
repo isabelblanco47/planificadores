@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lru-planner-list',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./lru-planner-list.component.css']
 })
 export class LruPlannerListComponent {
+
+  constructor(private router:Router) { }
 
 }
