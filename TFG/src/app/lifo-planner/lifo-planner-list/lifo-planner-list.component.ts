@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lifo-planner-list',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./lifo-planner-list.component.css']
 })
 export class LifoPlannerListComponent {
+  constructor(private router:Router) { }
 
 }

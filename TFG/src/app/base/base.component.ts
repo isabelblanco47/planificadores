@@ -11,7 +11,7 @@ export class BaseComponent {
   constructor(private router:Router) { }
 
   menu = [
-    { nombre: "Home", path: "", icon: "home" },
+    { nombre: "Inicio", path: "", icon: "home" },
     { nombre: "FIFO planner", path: "fifo", icon: "newspaper" },
     { nombre: "LIFO planner", path: "lifo", icon: "campaign" },
     { nombre: "LRU planner", path: "lru", icon: "today" },

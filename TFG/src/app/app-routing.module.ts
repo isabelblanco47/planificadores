@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FifoPlannerListComponent } from './fifo-planner/fifo-planner-list/fifo-planner-list.component';
 import { LifoPlannerListComponent } from './lifo-planner/lifo-planner-list/lifo-planner-list.component';
 import { LruPlannerListComponent } from './lru-planner/lru-planner-list/lru-planner-list.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 const routes: Routes = [
   { path: '', component: BaseComponent },
@@ -19,4 +20,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routingComponents = [FifoPlannerListComponent, LifoPlannerListComponent, LruPlannerListComponent, BaseComponent, DashboardComponent]
+export const routingComponents = [FifoPlannerListComponent, LifoPlannerListComponent, LruPlannerListComponent, BaseComponent, DashboardComponent, NavigationComponent]
