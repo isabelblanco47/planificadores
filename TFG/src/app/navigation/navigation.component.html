@@ -9,11 +9,13 @@
   <mat-sidenav-container autosize>
     <mat-sidenav #drawer mode="side" opened role="navigation">
       <mat-nav-list>
-        <a mat-list-item routerLink='/fifo'>Fifo</a>
-        <a mat-list-item routerLink='/lru'>LRU</a>
+        <a mat-list-item routerLink='/base'> <mat-icon>home</mat-icon>Inicio</a>
+        <a mat-list-item routerLink='/fifo'>Planificadores</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
+
+  
