@@ -12,6 +12,7 @@ export class BaseComponent {
 
   menu = [
     { nombre: "Inicio", path: "", icon: "home" },
+    { nombre: "Menú principal", path: "base", icon: "newspaper" },
     { nombre: "FIFO planner", path: "fifo", icon: "newspaper" },
     { nombre: "LIFO planner", path: "lifo", icon: "campaign" },
     { nombre: "LRU planner", path: "lru", icon: "today" },

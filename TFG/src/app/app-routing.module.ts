@@ -9,6 +9,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 
 const routes: Routes = [
   { path: '', component: BaseComponent },
+  { path: 'base', component: BaseComponent },
   { path: 'fifo', component: FifoPlannerListComponent },
   { path: 'lifo', component: LifoPlannerListComponent },
   { path: 'lru', component: LruPlannerListComponent }

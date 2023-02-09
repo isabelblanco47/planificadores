@@ -1,5 +1,12 @@
-.content-container {
-    min-height: 100vh;
-    box-sizing: border-box;
-    padding: 25px;
+
+mat-grid-tile {
+    width: 100%;
+    height: 50%;
+    background-color: lightgrey;
+    border-radius: 30px;
+
 }
+
+.grid-container {
+    grid-row-gap: 50px;
+  }
