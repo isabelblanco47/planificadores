@@ -1,0 +1,22 @@
+<p>planificadores-list works!</p>
+
+<div>
+    <form>
+        <label for=" numTareas">Número de tareas:</label><br>
+        <input type="text" id="numTareas" name="numTareas"><br>
+        <input id="clickMe" type="button" value="Continuar" (click)="solicitarNumeroTareas()"/><br>
+    </form>
+</div>
+<div id="ocultarCamposForm" *ngFor="let tarea of elementos">
+    <form >
+        <label for=" numTareas">Start time:</label><br>
+        <input type="text" id="startTime" name="startTime"><br>
+        
+
+        <label for=" numTareas">Prioridad:</label><br>
+        <input type="text" id="prioridad" name="prioridad"><br>
+        <hr color="light">
+        
+    </form>
+
+</div>

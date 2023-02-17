@@ -10,7 +10,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {TextFieldModule} from '@angular/cdk/text-field';
 
 
 @NgModule({
@@ -30,7 +30,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCardModule,
     MatMenuModule,
     MatSidenavModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TextFieldModule,
   ]
 })
 export class MaterialModule { }
