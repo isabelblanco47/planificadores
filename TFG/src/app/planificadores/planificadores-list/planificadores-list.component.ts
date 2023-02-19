@@ -17,7 +17,7 @@ export class PlanificadoresListComponent {
   archivo = null;
   contador = 1
   labelInfo = ""
-
+  task: any[]= []
   constructor(private router: Router) {
 
   }
@@ -29,8 +29,7 @@ export class PlanificadoresListComponent {
     
   }
 
-  
-  JSONdatos = { task: [{}] }
+  JSONdatos = {"task":this.task}
   generarJSON() {
     let tarea = "T" + this.contador
     let temp = {
