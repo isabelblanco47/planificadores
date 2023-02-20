@@ -1,23 +1,122 @@
-
 <div>
-    <form>
-        <label for="infoTarea" id="infoTarea">{{labelInfo}}</label><br>
-        <label for="startTime">Start time</label><br>
-        <input type="text" id="startTime" name="startTime"><br>
+    <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Instrucciones
+                </mat-panel-title>
+                <mat-panel-description>
+                    Instrucciones para llevar a cabo la simulación.
+                    {{panelOpenState ? 'Pulsa para cerrar esta ventana.' : 'Pulsa para más información.'}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ol>
+                <li>
+                    El <strong>primer paso</strong> es describir el archivo JSON en el que indicaremos los datos con los
+                    que
+                    se ejecutarán los planificadores. La información que estará contenida en el archivo viene dada en
+                    tareas. Cada una de estas tareas contiene la siguiente información:<br>
+                    <ul>
+                        <li><strong>Start time:</strong> Valor numérico que hace referencia al instante de tiempo en la
+                            que
+                            se ejecuta la tarea.</li>
+                        <li><strong>Priority:</strong> Valor numérico que hace referencia al valor de la prioridad que
+                            tiene
+                            esta tarea respecto a otras.</li>
+                        <li><strong>Behaviour:</strong> Este campo está formado a su vez por dos: Type y Duration.
+                            Podemos
+                            tener diferentes valores para el comportamiento (behaviour) de la tarea.</li>
+                        <ul>
+                            <li><strong>Type</strong> Valor numérico que referencia el tipo de comportamiento.</li>
+                            <li><strong>Duration</strong> Valor numérico que referencia a la duración que tendrá el
+                                comportamiento de la tarea.</li>
+                        </ul>
+                    </ul>
 
-        <label for="priority">Priority</label><br>
-        <input type="text" id="priority" name="priority"><br><br>
+                </li>
 
-        <p>Behaviour de la tarea:</p>
-        <label for="type">Type</label><br>
-        <input type="text" id="type" name="type"><br>
-        <label for="duration">Duration</label><br>
-        <input type="text" id="duration" name="duration"><br>
+            </ol>
+        </mat-expansion-panel>
+    </mat-accordion>
 
-        <input id="clickMe1" type="button" value="Nuevo Dato Behaviour" (click)="almacenarDatosBehaviour()" /><br><br>
 
-        <input id="clickMe2" type="button" value="Almacenar Datos Tarea" (click)="almacenarDatosTask()" /><br>
 
-    </form>
+    <mat-grid-list cols="2" rowHeight="600" [gutterSize]="'10px'">
+        <mat-grid-tile>
+
+            <form>
+
+                <h2 class= "centered-title" id="infoTarea"> {{labelInfo}}</h2><br>
+                
+                <mat-divider></mat-divider><br>
+
+                <mat-form-field appearance="fill" class="col-6">
+                    <mat-label>Start time</mat-label>
+                    <input matInput required placeholder="Ej. 0, 1, 2..."  [(ngModel)]="start_time">
+                </mat-form-field>
+                
+
+                <mat-form-field appearance="fill" id = "priority" class="col-6">
+                    <mat-label>Priority</mat-label>
+                    <input matInput required placeholder="Ej. 4, 5, 6...">
+                </mat-form-field>
+
+                <br><br>
+                <mat-divider></mat-divider>
+                <br>
+
+                <h4 class= "centered-title">Datos behaviour</h4><br>
+
+                <mat-form-field appearance="fill" id = "type" class="col-6">
+                    <mat-label>Behaviour Type</mat-label>
+                    <input matInput placeholder="Ej. 0, 1, 2...">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" id = "duration" class="col-6">
+                    <mat-label>Behaviour Duration</mat-label>
+                    <input matInput placeholder="Ej. 9, 10, 11...">
+                </mat-form-field>
+
+                <button mat-raised-button class="btn-derecha" (click)="almacenarDatosBehaviour()" >Añadir datos behaviour</button><br><br>
+                <mat-divider></mat-divider><br>
+                <button mat-raised-button class="btn-centrado" color="primary" (click)="almacenarDatosTask()">Añadir tarea al JSON</button>
+
+
+
+
+                <!-- 
+                <label for="infoTarea" id="infoTarea">{{labelInfo}}</label><br>
+
+                <label for="startTime">Start time</label><br>
+                <input type="text" id="startTime" name="startTime"><br>
+
+                <label for="priority">Priority</label><br>
+                <input type="text" id="priority" name="priority"><br><br>
+
+                <p>Behaviour de la tarea:</p>
+                <label for="type">Type</label><br>
+                <input type="text" id="type" name="type"><br>
+                <label for="duration">Duration</label><br>
+                <input type="text" id="duration" name="duration"><br>
+
+                <input id="clickMe1" type="button" value="Nuevo Dato Behaviour"
+                    (click)="almacenarDatosBehaviour()" /><br><br>
+
+                <input id="clickMe2" type="button" value="Almacenar Datos Tarea" (click)="almacenarDatosTask()" /><br>
+-->
+            </form>
+
+            <mat-grid-tile-header>
+                Campos del JSON
+            </mat-grid-tile-header>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <code><p>{{JSONdatos}}</p></code>
+            <mat-grid-tile-header>
+                Archivo JSON
+            </mat-grid-tile-header>
+        </mat-grid-tile>
+    </mat-grid-list>
+
 
 </div>

@@ -1,0 +1,23 @@
+mat-grid-tile {
+    width: 100%;
+    height: 100%;
+}
+
+.grid-container {
+    grid-row-gap: 50px;
+  }
+
+h2.centered-title {
+    text-align: center;
+}
+
+h4.centered-title {
+    text-align: center;
+}
+button.btn-derecha{
+    justify-content: flex-end;
+}
+
+button.btn-centrado{
+    justify-content: center;
+}

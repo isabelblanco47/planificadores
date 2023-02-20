@@ -11,6 +11,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TextFieldModule} from '@angular/cdk/text-field';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatInputModule} from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -32,6 +37,12 @@ import {TextFieldModule} from '@angular/cdk/text-field';
     MatSidenavModule,
     BrowserAnimationsModule,
     TextFieldModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
+
   ]
 })
 export class MaterialModule { }

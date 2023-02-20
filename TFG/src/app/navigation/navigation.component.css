@@ -16,6 +16,14 @@ mat-sidenav-content {
   width: 100%;
 }
 
+.mat-expansion-panel-header {
+  text-align: left;
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  font-size: 1rem;
+}
+
 .mat-icon {
   margin-right: 15px;
   vertical-align: middle;
@@ -60,4 +68,8 @@ mat-toolbar.mat-primary {
 img {
   max-width: 18%;
   height: auto;
+}
+
+.logo_nav {
+  height: auto
 }

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class PlanificadoresListComponent {
 
+  panelOpenState = false;
   numTareas = 0
   start_time = 0;
   type = 0;
@@ -17,7 +18,7 @@ export class PlanificadoresListComponent {
   archivo = null;
   contador = 1
   labelInfo = ""
-  task: any[]= []
+  task: any[] = []
   constructor(private router: Router) {
 
   }
@@ -25,11 +26,11 @@ export class PlanificadoresListComponent {
   ngOnInit() {
     console.warn("NGONINT")
     this.labelInfo = "Información de la Tarea " + this.contador;
-    
-    
+
+
   }
 
-  JSONdatos = {"task":this.task}
+  JSONdatos = { "task": this.task }
   generarJSON() {
     let tarea = "T" + this.contador
     let temp = {
@@ -56,6 +57,7 @@ export class PlanificadoresListComponent {
     this.labelInfo = "Información de la Tarea " + this.contador;
     (document.getElementById("startTime") as HTMLInputElement).value = "";
     (document.getElementById("priority") as HTMLInputElement).value = "";
+    //(document.getElementById("JSON_snippet") as HTMLElement) = this.JSONdatos.toString();
   }
 
   behaviourDict: any[] = []
@@ -72,5 +74,11 @@ export class PlanificadoresListComponent {
     (document.getElementById("type") as HTMLInputElement).value = "";
     (document.getElementById("duration") as HTMLInputElement).value = "";
     console.log("BEHAVIOUR", this.behaviourDict)
+    this.actualizarJSONSnippet()
+  }
+
+  actualizarJSONSnippet() {
+    var element = document.getElementById("JSON_snippet")?.innerHTML;
+    console.log("valor element", element)
   }
 }
