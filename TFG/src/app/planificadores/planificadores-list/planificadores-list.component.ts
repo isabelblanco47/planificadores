@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { MatCardTitleGroup } from '@angular/material/card';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,24 +12,24 @@ import { Router } from '@angular/router';
 export class PlanificadoresListComponent {
 
   panelOpenState = false;
+  control: FormControl = new FormControl("", [Validators.required])
   numTareas = 0
-  start_time = 0;
-  type = 0;
-  duration = 0;
-  priority = 0;
-  archivo = null;
+  start_time = "";
+  type = "";
+  duration = "";
+  priority = "";
   contador = 1
   labelInfo = ""
   task: any[] = []
-  constructor(private router: Router) {
+  camposValidos = false;
+  constructor(private router: Router, private _snackBar: MatSnackBar) {
 
   }
 
   ngOnInit() {
     console.warn("NGONINT")
+    console.log("CONTROL", this.control)
     this.labelInfo = "Información de la Tarea " + this.contador;
-
-
   }
 
   JSONdatos = { "task": this.task }
@@ -45,34 +47,23 @@ export class PlanificadoresListComponent {
   }
 
   almacenarDatosTask() {
-    const start_time = (document.getElementById("startTime") as HTMLInputElement).value
-    const priority = (document.getElementById("priority") as HTMLInputElement).value
-    // se parsean a integer los datos start time y priority recibidos por input
-    if (start_time != null && priority != null) {
-      this.start_time = parseInt(start_time)
-      this.priority = parseInt(priority)
+    if (this.start_time != null && this.priority != null) {
       this.generarJSON()
     }
+    let mensajePopUp = "Se ha añadido la tarea " + this.contador + " correctamente!"
+    this.openSnackBar(mensajePopUp, "")
     this.contador += 1
     this.labelInfo = "Información de la Tarea " + this.contador;
-    (document.getElementById("startTime") as HTMLInputElement).value = "";
-    (document.getElementById("priority") as HTMLInputElement).value = "";
-    //(document.getElementById("JSON_snippet") as HTMLElement) = this.JSONdatos.toString();
+
   }
+
 
   behaviourDict: any[] = []
   almacenarDatosBehaviour() {
-    const type = (document.getElementById("type") as HTMLInputElement).value
-    const duration = (document.getElementById("duration") as HTMLInputElement).value
-    if (type != null && duration != null) {
-      this.type = parseInt(type)
-      this.duration = parseInt(duration)
+    if (this.type != null && this.duration != null) {
       let temp = { "type": this.type, "duration": this.duration }
       this.behaviourDict.push(temp)
-
     }
-    (document.getElementById("type") as HTMLInputElement).value = "";
-    (document.getElementById("duration") as HTMLInputElement).value = "";
     console.log("BEHAVIOUR", this.behaviourDict)
     this.actualizarJSONSnippet()
   }
@@ -81,4 +72,13 @@ export class PlanificadoresListComponent {
     var element = document.getElementById("JSON_snippet")?.innerHTML;
     console.log("valor element", element)
   }
+
+  openSnackBar(mensaje: string, action: string) {
+    this._snackBar.open(mensaje, "Cerrar", {
+      duration: 3000
+    });
+  }
+
+
+
 }

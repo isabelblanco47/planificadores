@@ -46,40 +46,51 @@
 
             <form>
 
-                <h2 class= "centered-title" id="infoTarea"> {{labelInfo}}</h2><br>
-                
+                <h2 class="centered-title" id="infoTarea"> {{labelInfo}}</h2><br>
+
                 <mat-divider></mat-divider><br>
 
                 <mat-form-field appearance="fill" class="col-6">
                     <mat-label>Start time</mat-label>
-                    <input matInput required placeholder="Ej. 0, 1, 2..."  [(ngModel)]="start_time">
+                    <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." [(ngModel)]="start_time"
+                        name="start_time">
                 </mat-form-field>
-                
 
-                <mat-form-field appearance="fill" id = "priority" class="col-6">
+
+                <mat-form-field appearance="fill" id="priority" class="col-6">
                     <mat-label>Priority</mat-label>
-                    <input matInput required placeholder="Ej. 4, 5, 6...">
+                    <input matInput [formControl]="control" placeholder="Ej. 4, 5, 6..." [(ngModel)]="priority"
+                        name="priority">
                 </mat-form-field>
 
                 <br><br>
                 <mat-divider></mat-divider>
                 <br>
 
-                <h4 class= "centered-title">Datos behaviour</h4><br>
+                <h4 class="centered-title">Datos behaviour</h4><br>
 
-                <mat-form-field appearance="fill" id = "type" class="col-6">
+                <mat-form-field appearance="fill" id="type" class="col-6">
                     <mat-label>Behaviour Type</mat-label>
-                    <input matInput placeholder="Ej. 0, 1, 2...">
+                    <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." type [(ngModel)]="type"
+                        name="type">
                 </mat-form-field>
 
-                <mat-form-field appearance="fill" id = "duration" class="col-6">
+                <mat-form-field appearance="fill" id="duration" class="col-6">
                     <mat-label>Behaviour Duration</mat-label>
-                    <input matInput placeholder="Ej. 9, 10, 11...">
+                    <input matInput [formControl]="control" placeholder="Ej. 9, 10, 11..." [(ngModel)]="duration"
+                        name="duration">
                 </mat-form-field>
 
-                <button mat-raised-button class="btn-derecha" (click)="almacenarDatosBehaviour()" >Añadir datos behaviour</button><br><br>
+                <br>
+                <mat-icon *ngIf="!control.valid && control.touched" style="color:red">error</mat-icon><span *ngIf="!control.valid && control.touched" style= "color: red"> Debes rellenar todos los campos para
+                    crear la tarea. </span> 
+                <br>
+
+                <button mat-raised-button class="btn-behaviour" (click)="almacenarDatosBehaviour()">Añadir datos
+                    behaviour</button><br><br>
                 <mat-divider></mat-divider><br>
-                <button mat-raised-button class="btn-centrado" color="primary" (click)="almacenarDatosTask()">Añadir tarea al JSON</button>
+                <button mat-raised-button [disabled]="!control.valid" class="btn-centrado" color="primary"
+                    (click)="almacenarDatosTask()">Añadir tarea</button>
 
 
 
@@ -117,6 +128,5 @@
             </mat-grid-tile-header>
         </mat-grid-tile>
     </mat-grid-list>
-
 
 </div>

@@ -14,10 +14,21 @@ h2.centered-title {
 h4.centered-title {
     text-align: center;
 }
-button.btn-derecha{
+button.btn-behaviour{
     justify-content: flex-end;
+    left: 67%;
 }
 
 button.btn-centrado{
     justify-content: center;
+    left: 40%;
+}
+
+p.textoError {
+    color: red;
+    background: white;
+}
+
+.mat-icon {
+    display:inline-block;
 }
