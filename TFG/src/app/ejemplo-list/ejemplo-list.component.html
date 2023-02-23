@@ -1,1 +1,155 @@
-<p>ejemplo-list works!</p>
+<h1> Ejemplo de ejecución de los planificadores </h1><br>
+
+<mat-grid-list cols="2" rowHeight="600" [gutterSize]="'10px'">
+    <mat-grid-tile background-color: #D8ABF3>
+
+
+        <mat-form-field appearance="fill" class="col-10">
+            <mat-label>Selecciona un ejemplo</mat-label>
+            <mat-select [(ngModel)]="selected">
+                <mat-option *ngFor="let opcion of opciones_ejemplo" [value]="opcion.value">
+                    {{opcion.nombre}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-grid-tile-header>
+            Selección del JSON de prueba
+        </mat-grid-tile-header>
+    </mat-grid-tile>
+
+    <mat-grid-tile background-color: #F2EBF6;>
+
+        <div [innerHtml]="tabla"></div>
+
+        
+        <div *ngIf ="nombreSeleccionado == 'Sample CPU JSON'">
+            <table mat-table [dataSource]="elementos_ej1" class="mat-elevation-z8 demo-table">
+                <ng-container matColumnDef="demo-position">
+                    <th mat-header-cell *matHeaderCellDef> Tarea </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-name">
+                    <th mat-header-cell *matHeaderCellDef> Start Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-weight">
+                    <th mat-header-cell *matHeaderCellDef> Priority </th>
+                    <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-symbol1">
+                    <th mat-header-cell *matHeaderCellDef> Behaviour 1 </th>
+                    <td mat-cell *matCellDef="let element"> {{element.behaviour1}} </td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+        <br>
+
+        <!--
+        
+        <div *ngIf ="nombreSeleccionado == 'Sample Interactive'">
+            <table mat-table [dataSource]="elementos_ej2" class="mat-elevation-z8 demo-table">
+
+                <ng-container matColumnDef="demo-position">
+                    <th mat-header-cell *matHeaderCellDef> Tarea </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-name">
+                    <th mat-header-cell *matHeaderCellDef> Start Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-weight">
+                    <th mat-header-cell *matHeaderCellDef> Priority </th>
+                    <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-symbol1">
+                    <th mat-header-cell *matHeaderCellDef> Behaviour 1 </th>
+                    <td mat-cell *matCellDef="let element"> {{element.behaviour1}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="demo-symbol2">
+                    <th mat-header-cell *matHeaderCellDef> Behaviour 2 </th>
+                    <td mat-cell *matCellDef="let element"> {{element.behaviour2}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-symbol3">
+                    <th mat-header-cell *matHeaderCellDef> Behaviour 3 </th>
+                    <td mat-cell *matCellDef="let element"> {{element.behaviour3}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-symbol4">
+                    <th mat-header-cell *matHeaderCellDef> Behaviour 4 </th>
+                    <td mat-cell *matCellDef="let element"> {{element.behaviour4}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="demo-symbol5">
+                    <th mat-header-cell *matHeaderCellDef> Behaviour 5 </th>
+                    <td mat-cell *matCellDef="let element"> {{element.behaviour5}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            </table>
+        </div>
+    
+    <div *ngIf ="nombreSeleccionado == 'Sample IO Bound'">
+        <table mat-table [dataSource]="elementos_ej2" class="mat-elevation-z8 demo-table">
+
+            <ng-container matColumnDef="demo-position">
+                <th mat-header-cell *matHeaderCellDef> Tarea </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="demo-name">
+                <th mat-header-cell *matHeaderCellDef> Start Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.start_time}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="demo-weight">
+                <th mat-header-cell *matHeaderCellDef> Priority </th>
+                <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="demo-symbol1">
+                <th mat-header-cell *matHeaderCellDef> Behaviour 1 </th>
+                <td mat-cell *matCellDef="let element"> {{element.behaviour1}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="demo-symbol2">
+                <th mat-header-cell *matHeaderCellDef> Behaviour 2 </th>
+                <td mat-cell *matCellDef="let element"> {{element.behaviour2}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="demo-symbol3">
+                <th mat-header-cell *matHeaderCellDef> Behaviour 3 </th>
+                <td mat-cell *matCellDef="let element"> {{element.behaviour3}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+        </table>
+    </div>
+    -->
+
+        <mat-grid-tile-header>
+            Tabla generada
+        </mat-grid-tile-header>
+    </mat-grid-tile>
+</mat-grid-list>
+
+
+<button mat-raised-button (click)="funcionTemporal()">Prueba </button><br><br>
