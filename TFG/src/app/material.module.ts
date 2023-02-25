@@ -19,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [],
@@ -46,7 +47,9 @@ import {MatTableModule} from '@angular/material/table';
     ReactiveFormsModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatChipsModule,
+    
     
   ]
 })

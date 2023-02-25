@@ -20,50 +20,32 @@ export class EjemploListComponent {
   sample_io_bound = { "tasks": [{ "command": "T1", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 1 }, { "type": 1, "duration": 10 }, { "type": 0, "duration": 1 }] }, { "command": "T2", "start_time": 2, "priority": 99, "behaviour": [{ "type": 0, "duration": 1 }, { "type": 2, "duration": 10 }, { "type": 0, "duration": 1 }] }, { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }, { "type": 1, "duration": 10 }, { "type": 0, "duration": 1 }] }] }
 
   selected = ""
-  nombreSeleccionado =""
 
   opciones_ejemplo: any[] = [
     {
       value: { "tasks": [{ "command": "T1", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }] }, { "command": "T2", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }] }, { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }] }] },
       nombre: 'Sample CPU JSON',
-      html: "",
+      opcion: "ejemplo1",
     },
     {
       value: { "tasks": [{ "command": "T1", "start_time": 2, "priority": 9, "behaviour": [{ "type": 0, "duration": 2 }, { "type": 1, "duration": 4 }, { "type": 0, "duration": 2 }] }, { "command": "T2", "start_time": 0, "priority": 1, "behaviour": [{ "type": 0, "duration": 4 }, { "type": 1, "duration": 2 }, { "type": 0, "duration": 1 }] }, { "command": "T3", "start_time": 0, "priority": 2, "behaviour": [{ "type": 0, "duration": 4 }, { "type": 1, "duration": 5 }, { "type": 0, "duration": 1 }, { "type": 2, "duration": 10 }, { "type": 0, "duration": 3 }] }] },
       nombre: 'Sample Interactive',
-      html: "",
+      opcion: "ejemplo2",
     },
     {
       value: { "tasks": [{ "command": "T1", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 1 }, { "type": 1, "duration": 10 }, { "type": 0, "duration": 1 }] }, { "command": "T2", "start_time": 2, "priority": 99, "behaviour": [{ "type": 0, "duration": 1 }, { "type": 2, "duration": 10 }, { "type": 0, "duration": 1 }] }, { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }, { "type": 1, "duration": 10 }, { "type": 0, "duration": 1 }] }] },
       nombre: 'Sample IO Bound',
-      html: "",
+      opcion: "ejemplo3",
     },
   ];
   
 
-
   ngOnInit() {
-    console.log("num elementos del json::::", this.opciones_ejemplo[0].value.tasks[0])
   }
 
-  funcionTemporal() {
-    console.log("SELECCIONADO", this.selected)
-    if (this.selected != undefined) {
-      //this.nombreSeleccionado = (this.selected.nombre != null ? this.selected.nombre : "")
-    }
-    
-    this.creacionTabla()
-
-  }
-
-  tabla = ""
-  creacionTabla() {
-    console.log("nombre seleccionado", this.nombreSeleccionado)
-    if (this.opciones_ejemplo[0].nombre == 'Sample CPU JSON') {
-
-    }
-  }
-
+/*
+ * Datos necesarios para generar las tablas en el HTML
+ */
   displayedColumns: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol1'];
   displayedColumns2: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol1', 'demo-symbol2', 'demo-symbol3', 'demo-symbol4', 'demo-symbol5'];
   displayedColumns3: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol1', 'demo-symbol2', 'demo-symbol3'];

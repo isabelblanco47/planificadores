@@ -1,17 +1,16 @@
 <h1> Ejemplo de ejecución de los planificadores </h1><br>
 
-<mat-grid-list cols="2" rowHeight="600" [gutterSize]="'10px'">
+<mat-grid-list cols="2" rowHeight="400" [gutterSize]="'10px'">
     <mat-grid-tile background-color: #D8ABF3>
 
-
-        <mat-form-field appearance="fill" class="col-10">
+  <mat-form-field appearance="fill" class="col-10">
             <mat-label>Selecciona un ejemplo</mat-label>
-            <mat-select [(ngModel)]="selected">
-                <mat-option *ngFor="let opcion of opciones_ejemplo" [value]="opcion.value">
+            <mat-select [(value)]="selected">
+                <mat-option *ngFor="let opcion of opciones_ejemplo" [value]="opcion.opcion">
                     {{opcion.nombre}}
                 </mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field> 
 
 
         <mat-grid-tile-header>
@@ -21,10 +20,10 @@
 
     <mat-grid-tile background-color: #F2EBF6;>
 
-        <div [innerHtml]="tabla"></div>
+        <!-- <div [innerHtml]="tabla"></div>-->
 
         
-        <div *ngIf ="nombreSeleccionado == 'Sample CPU JSON'">
+        <div *ngIf ="selected == 'ejemplo1'">
             <table mat-table [dataSource]="elementos_ej1" class="mat-elevation-z8 demo-table">
                 <ng-container matColumnDef="demo-position">
                     <th mat-header-cell *matHeaderCellDef> Tarea </th>
@@ -54,9 +53,9 @@
         </div>
         <br>
 
-        <!--
         
-        <div *ngIf ="nombreSeleccionado == 'Sample Interactive'">
+        
+        <div *ngIf ="selected == 'ejemplo2'">
             <table mat-table [dataSource]="elementos_ej2" class="mat-elevation-z8 demo-table">
 
                 <ng-container matColumnDef="demo-position">
@@ -105,7 +104,7 @@
             </table>
         </div>
     
-    <div *ngIf ="nombreSeleccionado == 'Sample IO Bound'">
+    <div *ngIf ="selected == 'ejemplo3'">
         <table mat-table [dataSource]="elementos_ej2" class="mat-elevation-z8 demo-table">
 
             <ng-container matColumnDef="demo-position">
@@ -143,13 +142,23 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
         </table>
     </div>
-    -->
 
         <mat-grid-tile-header>
             Tabla generada
         </mat-grid-tile-header>
     </mat-grid-tile>
-</mat-grid-list>
-
-
-<button mat-raised-button (click)="funcionTemporal()">Prueba </button><br><br>
+</mat-grid-list> 
+<br>
+<mat-divider></mat-divider>
+<br>
+<div class="chips-div">
+        <mat-chip-listbox aria-label="Scheduling selection">
+                <mat-chip-option color="dark">FIFO</mat-chip-option>
+                <mat-chip-option color="primary">Priority: Preemptive</mat-chip-option>
+                <mat-chip-option color="accent" selected>Priority: Non Preemptive</mat-chip-option>
+                <mat-chip-option color="warn">Round-Robin</mat-chip-option>
+              </mat-chip-listbox>
+</div>
+              <br>
+              <mat-divider></mat-divider>
+              <br>
