@@ -10,3 +10,38 @@ mat-grid-tile {
 .grid-container {
     grid-row-gap: 50px;
   }
+  .centrado {
+      text-align:center
+  }
+
+  .todos  {
+    display: block;
+    margin: 20px;
+    padding: 20px;
+    border-width: 20px;
+    }
+
+.texto1 {
+    display: block;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 100px;
+    border-width: 100px;
+    background-color: #565767;
+    
+}
+
+.texto2 {
+    display: block;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    padding: 100px;
+    border-width: 100px;
+    background-color:#544175;
+    
+}
+/* https://encycolorpedia.es/4c2882 paleta de colores */

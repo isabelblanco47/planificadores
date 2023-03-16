@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [],
@@ -49,7 +50,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatSelectModule,
     MatTableModule,
     MatChipsModule,
-    
+    MatTabsModule
+
     
   ]
 })
