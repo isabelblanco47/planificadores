@@ -1,25 +1,36 @@
 // implementacion de tasks.h
 
-export class Queue<T> {
-    private items: T[];
+
+interface Task {
+    command: string;
+    start_time: number;
+    priority: number;
+    behaviour: {
+        type: number;
+        duration: number;
+    }
+}
+
+export class Queue{
+    private elementos: Task[];
 
     constructor() {
-        this.items = [];
+        this.elementos = [];
     }
     
     /* FUNCIONES PARA LA COLA */
     /*
     * enqueue: Añade el nuevo elemento a una cola (array) y retorna la lista
     */
-    enqueue(item: T) {
-        this.items.push(item);
+    enqueue(item: Task) {
+        this.elementos.push(item);
     }
 
     /*
     * dequeue: Elimina el primer elemento de la cola (array) y lo muestra
     */
-    dequeue(): T | undefined {
-        return this.items.shift();
+    dequeue(): Task | undefined {
+        return this.elementos.shift();
     }
 
 
@@ -27,21 +38,21 @@ export class Queue<T> {
     * isEmpty: Devuelve un booleano que indica si la cola está vacía
     */
     isEmpty(): boolean {
-        return this.items.length === 0;
+        return this.elementos.length === 0;
     }
 
     /*
     * size: Devuelve la longitud de la lista
     */
     size(): number {
-        return this.items.length;
+        return this.elementos.length;
     }
 
     /*
     *  peek: devuelve el primer elemento de la cola sin eliminarlo
     */
-    peek(): T | undefined {
-        return this.items[0];
+    peek(): Task | undefined {
+        return this.elementos[0];
     }
 
     /* SETTER y GETTERS*/
