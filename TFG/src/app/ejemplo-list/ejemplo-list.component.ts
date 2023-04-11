@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
 
 @Component({
@@ -38,21 +39,21 @@ export class EjemploListComponent {
       opcion: "ejemplo3",
     },
   ];
-  
+
 
   ngOnInit() {
   }
 
-/*
- * Datos necesarios para generar las tablas en el HTML
- */
+  /*
+   * Datos necesarios para generar las tablas en el HTML
+   */
   displayedColumns: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol1'];
   displayedColumns2: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol1', 'demo-symbol2', 'demo-symbol3', 'demo-symbol4', 'demo-symbol5'];
   displayedColumns3: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol1', 'demo-symbol2', 'demo-symbol3'];
   elementos_ej1: any[] = [
-    { name: 'T1', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 4"},
-    { name: 'T2', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 4"},
-    { name: 'T3', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 4"},
+    { name: 'T1', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 4" },
+    { name: 'T2', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 4" },
+    { name: 'T3', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 4" },
   ];
 
   elementos_ej2: any[] = [
@@ -64,8 +65,34 @@ export class EjemploListComponent {
   elementos_ej3: any[] = [
     { name: 'T1', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 1", behaviour2: "Type: 1 Duration: 10", behaviour3: "Type: 0 Duration: 1" },
     { name: 'T2', start_time: 2, priority: 99, behaviour1: "Type: 0 Duration: 1", behaviour2: "Type: 2 Duration: 10", behaviour3: "Type: 0 Duration: 1" },
-    { name: 'T3', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 4", behaviour2: "Type: 1 Duration: 10", behaviour3: "Type: 0 Duration: 1"},
+    { name: 'T3', start_time: 0, priority: 99, behaviour1: "Type: 0 Duration: 4", behaviour2: "Type: 1 Duration: 10", behaviour3: "Type: 0 Duration: 1" },
   ];
 
 
+  pulsadoFifo(): void {
+    console.log(" ----------------- ")
+    console.warn("Has seleccionado FIFO")
+    console.log(" ----------------- ")
+  }
+
+  pulsadoPriorityNonPreemptive(): void {
+    console.log(" ----------------- ")
+    console.warn("Has seleccionado Priority Preemptive")
+    console.log(" ----------------- ")
+  }
+
+  pulsadoPriorityPreemtive(): void {
+    console.log(" ----------------- ")
+    console.warn("Has seleccionado Priority Non Preemptive")
+    console.log(" ----------------- ")
+  }
+
+  pulsadoRoundRobin(): void {
+    console.log(" ----------------- ")
+    console.warn("Has seleccionado Round Robin")
+    console.log(" ----------------- ")
+  }
 }
+
+
+
