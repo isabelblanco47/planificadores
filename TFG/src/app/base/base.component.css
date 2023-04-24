@@ -44,4 +44,24 @@ mat-grid-tile {
     background-color:#544175;
     
 }
-/* https://encycolorpedia.es/4c2882 paleta de colores */
+
+.tituloCard {
+    font-size: 28px;
+    color: \$text_color;
+    margin-left: 2rem;
+    margin-bottom: 0px;
+    padding: 3rem 1rem 2rem 0rem !important;
+    background-color: #1a0d1e;
+  
+  }
+
+ .material-icons-outlined{
+    margin-top:-5px !important;
+}
+
+.mat-tab-group.mat-tab-group-dynamic-height .mat-tab-body.mat-tab-body-active {
+	overflow-y: hidden;
+}
+
+
+/* https://encycolorpedia.es/7b1fa2  paleta de colores */
