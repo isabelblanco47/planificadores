@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
+import { FIFO } from '../shared/shared/MAIN/domain/FIFO';
+import { Scheduler } from '../shared/shared/MAIN/domain/Scheduler';
+import { TaskDescriptor } from '../shared/shared/MAIN/domain/Descriptor';
+import { TaskControlBlock } from '../shared/shared/MAIN/domain/TaskControlBlock';
 
 @Component({
   selector: 'app-ejemplo-list',
@@ -14,11 +18,57 @@ export class EjemploListComponent {
   }
 
   /** DECLARACIÓN DE LOS JSON DE EJEMPLO **/
-  sample_cpu_json = { "tasks": [{ "command": "T1", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }] }, { "command": "T2", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }] }, { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }] }] }
+  sample_cpu_json = { "tasks": [
+    { "command": "T1", "start_time": 0, "priority": 99, "behaviour": [
+      { "type": 0, "duration": 4 }]
+    }, 
+    { "command": "T2", "start_time": 0, "priority": 99, "behaviour": [
+      { "type": 0, "duration": 4 }]
+    },
+    { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [
+      { "type": 0, "duration": 4 }]
+    }]
+  }
 
-  sample_interactive = { "tasks": [{ "command": "T1", "start_time": 2, "priority": 9, "behaviour": [{ "type": 0, "duration": 2 }, { "type": 1, "duration": 4 }, { "type": 0, "duration": 2 }] }, { "command": "T2", "start_time": 0, "priority": 1, "behaviour": [{ "type": 0, "duration": 4 }, { "type": 1, "duration": 2 }, { "type": 0, "duration": 1 }] }, { "command": "T3", "start_time": 0, "priority": 2, "behaviour": [{ "type": 0, "duration": 4 }, { "type": 1, "duration": 5 }, { "type": 0, "duration": 1 }, { "type": 2, "duration": 10 }, { "type": 0, "duration": 3 }] }] }
+  sample_interactive = { 
+    "tasks": [
+      { "command": "T1", "start_time": 2, "priority": 9, "behaviour": [
+        { "type": 0, "duration": 2 }, 
+        { "type": 1, "duration": 4 }, 
+        { "type": 0, "duration": 2 }] 
+      }, 
+      { "command": "T2", "start_time": 0, "priority": 1, "behaviour": [
+        { "type": 0, "duration": 4 },
+        { "type": 1, "duration": 2 },
+        { "type": 0, "duration": 1 }] 
+      }, 
+      { "command": "T3", "start_time": 0, "priority": 2, "behaviour": [
+        { "type": 0, "duration": 4 }, 
+        { "type": 1, "duration": 5 }, 
+        { "type": 0, "duration": 1 }, 
+        { "type": 2, "duration": 10 }, 
+        { "type": 0, "duration": 3 }] 
+      }] 
+    }
 
-  sample_io_bound = { "tasks": [{ "command": "T1", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 1 }, { "type": 1, "duration": 10 }, { "type": 0, "duration": 1 }] }, { "command": "T2", "start_time": 2, "priority": 99, "behaviour": [{ "type": 0, "duration": 1 }, { "type": 2, "duration": 10 }, { "type": 0, "duration": 1 }] }, { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [{ "type": 0, "duration": 4 }, { "type": 1, "duration": 10 }, { "type": 0, "duration": 1 }] }] }
+  sample_io_bound = {
+    "tasks": [
+      { "command": "T1", "start_time": 0, "priority": 99, "behaviour": [
+        { "type": 0, "duration": 1 },
+        { "type": 1, "duration": 10 },
+        { "type": 0, "duration": 1 }]
+      }, 
+      { "command": "T2", "start_time": 2, "priority": 99, "behaviour": [
+        { "type": 0, "duration": 1 }, 
+        { "type": 2, "duration": 10 },
+        { "type": 0, "duration": 1 }] 
+      },
+      { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [
+        { "type": 0, "duration": 4 },
+        { "type": 1, "duration": 10 },
+        { "type": 0, "duration": 1 }]
+      }]
+    }
 
   selected = ""
 
@@ -70,9 +120,36 @@ export class EjemploListComponent {
 
 
   pulsadoFifo(): void {
-    console.log(" ----------------- ")
-    console.warn("Has seleccionado FIFO")
-    console.log(" ----------------- ")
+
+    let algorithm = new FIFO();
+    let scheduler = new Scheduler(algorithm);
+
+    let example = this.sample_io_bound;
+
+    // Load the items into the scheduler
+    for (let i = 0; i < example.tasks.length; i++) {
+
+      // Allocate the TCB
+      let tcb = new TaskControlBlock(0,
+        example.tasks[i].command,
+        example.tasks[i].priority);
+
+      // Create the task descriptor attached to the TCB
+      let task = new TaskDescriptor(tcb, example.tasks[i].start_time);
+
+      // Load the behaviour into the task descriptor
+      for (let j = 0; j < example.tasks[i].behaviour.length; j++) {
+        task.appendBehavior(example.tasks[i].behaviour[j].type, 
+          example.tasks[i].behaviour[j].duration);
+      }
+
+      scheduler.appendDescriptor(task);
+
+    }
+
+    // Let's go!
+    scheduler.run();
+
   }
 
   pulsadoPriorityNonPreemptive(): void {
