@@ -1,79 +1,75 @@
 // implementacion de tasks.h
 
+import { TaskControlBlock } from "./TaskControlBlock";
 
-interface Task {
-    command: string;
-    start_time: number;
-    priority: number;
-    behaviour: {
-        type: number;
-        duration: number;
-    }
-}
 
-export class Queue{
-    private elementos: Task[];
+export class TaskQueue {
+
+    private tasks: TaskControlBlock[];
 
     constructor() {
-        this.elementos = [];
+        this.tasks = [];
     }
     
-    /* FUNCIONES PARA LA COLA */
-    /*
-    * enqueue: Añade el nuevo elemento a una cola (array) y retorna la lista
-    */
-    enqueue(item: Task) {
-        this.elementos.push(item);
+    /**
+     * This method adds a new task at the end of the queue.
+     * 
+     * @param item the task to be added.
+     */
+    enqueue(item: TaskControlBlock) {
+        this.tasks.push(item);
     }
 
     /*
-    * dequeue: Elimina el primer elemento de la cola (array) y lo muestra
+    * This method extracts the first task from the queue.
+    *
+    * @return the first task in the queue or undefined if the queue is empty.
     */
-    dequeue(): Task | undefined {
-        return this.elementos.shift();
+    dequeue(): TaskControlBlock | undefined {
+        return this.tasks.shift();
     }
 
 
-    /*
-    * isEmpty: Devuelve un booleano que indica si la cola está vacía
-    */
+    /**
+     * This method returns true if the queue is empty or false otherwise.
+     * 
+     * @return true if the queue is empty or false otherwise.
+     */
     isEmpty(): boolean {
-        return this.elementos.length === 0;
+        return this.tasks.length === 0;
     }
 
-    /*
-    * size: Devuelve la longitud de la lista
-    */
+    /**
+     * This method returns the number of tasks in the queue.
+     * 
+     * @return the number of tasks in the queue.
+     */
     size(): number {
-        return this.elementos.length;
+        return this.tasks.length;
     }
 
-    /*
-    *  peek: devuelve el primer elemento de la cola sin eliminarlo
-    */
-    peek(): Task | undefined {
-        return this.elementos[0];
-    }
-
-    /* SETTER y GETTERS*/
-    //TO DO: getPriority, setPriority, getTimeslice, setTimeslice, getState, setState.
-
-    /* ALGORITMOS DE ORDENACIÓN */
-    insertionSort(arr: number[]): number[] {
-        const n = arr.length;
-
-        for (let i = 1; i < n; i++) {
-            const key = arr[i];
-            let j = i - 1;
-
-            while (j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j--;
+    /**
+     * This method inserts a new task in the queue in accordance with a given sorting function.
+     * The method assumes that the queue is already sorted and uses a binary search to find the
+     * correct position for the new task.
+     * 
+     * @param item the task to be added.
+     * @param sort the sorting function. It receives two tasks and returns a number. 
+     *             If the number is negative, the first task is before the second one. 
+     *             If the number is positive, the first task is after the second one. 
+     *             If the number is zero, the order of the tasks is not defined.
+     */
+    insertSorted(item: TaskControlBlock, sort: (a: TaskControlBlock, b: TaskControlBlock) => number) {
+        let low = 0;
+        let high = this.tasks.length;
+        while (low < high) {
+            const mid = (low + high) >>> 1;
+            if (sort(this.tasks[mid], item) < 0) {
+                low = mid + 1;
+            } else {
+                high = mid;
             }
-
-            arr[j + 1] = key;
         }
-
-        return arr;
+        this.tasks.splice(low, 0, item);
     }
 }
