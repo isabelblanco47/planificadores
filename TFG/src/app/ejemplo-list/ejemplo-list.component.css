@@ -48,3 +48,14 @@
     display: flex;
     justify-content: center;
 }
+
+.tituloCard {
+    font-size: 28px;
+    color: \$text_color;
+    margin-bottom: 0px;
+    padding: 3rem 1rem 2rem 0rem !important;
+    background-color: #1a0d1e;
+    text-align: center;
+    overflow: visible !important;
+    
+  }

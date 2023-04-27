@@ -22,6 +22,8 @@ export class PlanificadoresListComponent {
   labelInfo = ""
   task: any[] = []
   camposValidos = false;
+  texto_JSONdatos = ""
+
   constructor(private router: Router, private _snackBar: MatSnackBar) {
 
   }
@@ -44,6 +46,7 @@ export class PlanificadoresListComponent {
     this.JSONdatos.task.push(temp)
     //delete this.JSONdatos.task[0] // Se elemina el primer campo del diccionario por 
     console.log("CAMPOS JSON PRUEBA 2", this.JSONdatos)
+    this.texto_JSONdatos = JSON.parse(this.JSONdatos.toString())
   }
 
   almacenarDatosTask() {
@@ -65,13 +68,9 @@ export class PlanificadoresListComponent {
       this.behaviourDict.push(temp)
     }
     console.log("BEHAVIOUR", this.behaviourDict)
-    this.actualizarJSONSnippet()
   }
 
-  actualizarJSONSnippet() {
-    var element = document.getElementById("JSON_snippet")?.innerHTML;
-    console.log("valor element", element)
-  }
+
 
   openSnackBar(mensaje: string, action: string) {
     this._snackBar.open(mensaje, "Cerrar", {
@@ -79,6 +78,32 @@ export class PlanificadoresListComponent {
     });
   }
 
+  /**
+   * Lectura y cargado de archivo local
+   */
+  lectura_archivo: any;
 
-
+  archivo: any;
+  fileChanged(e: any) {
+    this.archivo = e.target.files[0];
+  }
+  uploadDocument(file:any) {
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      console.log(fileReader.result);
+    }
+    fileReader.readAsText(this.archivo);
+    fileReader.onload = () => {
+      const content: string = fileReader.result as string;
+      try {
+        this.lectura_archivo = JSON.parse(content);
+        console.log('Archivo cargado y almacenado en variable');
+        this.openSnackBar("Archivo cargado y almacenado en variable", "")
+        this.texto_JSONdatos = content
+      } catch (error) {
+        console.error('El archivo no es un JSON válido');
+        this.openSnackBar("El archivo no es un JSON válido. Selecciona un archivo válido.", "")
+      }
+    };
+  }
 }

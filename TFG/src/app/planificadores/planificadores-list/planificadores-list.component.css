@@ -1,10 +1,28 @@
+ /* .todos  {
+    display: block;
+    margin: 20px;
+    margin-top: 0px;
+    padding: 20px;
+    border-width: 20px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+    } */
+ 
+
 mat-grid-tile {
+    display:flex;
+    overflow: hidden !important;
+    padding:0;
     width: 100%;
     height: 100%;
 }
 
+
 .grid-container {
     grid-row-gap: 50px;
+    width: 100%;
+    height: 100%;
   }
 
 h2.centered-title {
@@ -37,15 +55,44 @@ p.textoError {
 .tituloCard {
     font-size: 28px;
     color: \$text_color;
-    margin-left: 2rem;
     margin-bottom: 0px;
     padding: 3rem 1rem 2rem 0rem !important;
-    background-color: #1a0d1e
-  
+    background-color: #1a0d1e;
+    text-align: center;
+    overflow: visible !important;
+    
   }
-  .mat-extension-panel-title {
-    background-color: #766964
-  }
+
   .mat-grid-tile  {
     background-color:#2c1435
+  }
+
+  .file-select {
+    position: relative;
+    display: inline-block;
+  }
+
+  .file-select::before {
+    background-color: #5678EF;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    content: 'Seleccionar'; /* testo por defecto */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .file-select input[type="file"] {
+    opacity: 0;
+    width: 200px;
+    height: 32px;
+  }
+
+  .mat-tab-group {
+    width: 100%;
   }

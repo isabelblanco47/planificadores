@@ -1,141 +1,179 @@
 <div class="tituloCard">
     <mat-icon class="iconCard material-icons-outlined">poll</mat-icon>
-    <span>  Simulador de planificadores</span>
-  </div>
+    <span> Simulador de planificadores</span>
+</div>
 
-<div>
-    <mat-accordion>
-        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" style="background-color: aquamarine;color:black !important">
-            <mat-expansion-panel-header>
-                <mat-panel-title style="color:black">
-                    Instrucciones
-                </mat-panel-title>
-                <mat-panel-description style="color:black">
-                    Instrucciones para llevar a cabo la simulación.
-                    {{panelOpenState ? 'Pulsa para cerrar esta ventana.' : 'Pulsa para más información.'}}
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <ol>
-                <li>
-                    El <strong>primer paso</strong> es describir el archivo JSON en el que indicaremos los datos con los
-                    que
-                    se ejecutarán los planificadores. La información que estará contenida en el archivo viene dada en
-                    tareas. Cada una de estas tareas contiene la siguiente información:<br>
-                    <ul>
-                        <li><strong>Start time:</strong> Valor numérico que hace referencia al instante de tiempo en la
-                            que
-                            se ejecuta la tarea.</li>
-                        <li><strong>Priority:</strong> Valor numérico que hace referencia al valor de la prioridad que
-                            tiene
-                            esta tarea respecto a otras.</li>
-                        <li><strong>Behaviour:</strong> Este campo está formado a su vez por dos: Type y Duration.
-                            Podemos
-                            tener diferentes valores para el comportamiento (behaviour) de la tarea.</li>
+<div class="todos">
+
+
+
+    <div>
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                style="background-color: aquamarine;color:black !important">
+                <mat-expansion-panel-header>
+                    <mat-panel-title style="color:black">
+                        Instrucciones
+                    </mat-panel-title>
+                    <mat-panel-description style="color:black">
+                        Instrucciones para llevar a cabo la simulación.
+                        {{panelOpenState ? 'Pulsa para cerrar esta ventana.' : 'Pulsa para más información.'}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <ol>
+                    <li>
+                        El <strong>primer paso</strong> es describir el archivo JSON en el que indicaremos los datos con
+                        los
+                        que
+                        se ejecutarán los planificadores. La información que estará contenida en el archivo viene dada
+                        en
+                        tareas. Cada una de estas tareas contiene la siguiente información:<br>
                         <ul>
-                            <li><strong>Type</strong> Valor numérico que referencia el tipo de comportamiento.</li>
-                            <li><strong>Duration</strong> Valor numérico que referencia a la duración que tendrá el
-                                comportamiento de la tarea.</li>
+                            <li><strong>Start time:</strong> Valor numérico que hace referencia al instante de tiempo en
+                                la
+                                que
+                                se ejecuta la tarea.</li>
+                            <li><strong>Priority:</strong> Valor numérico que hace referencia al valor de la prioridad
+                                que
+                                tiene
+                                esta tarea respecto a otras.</li>
+                            <li><strong>Behaviour:</strong> Este campo está formado a su vez por dos: Type y Duration.
+                                Podemos
+                                tener diferentes valores para el comportamiento (behaviour) de la tarea.</li>
+                            <ul>
+                                <li><strong>Type</strong> Valor numérico que referencia el tipo de comportamiento.</li>
+                                <li><strong>Duration</strong> Valor numérico que referencia a la duración que tendrá el
+                                    comportamiento de la tarea.</li>
+                            </ul>
                         </ul>
-                    </ul>
 
-                </li>
+                    </li>
 
-            </ol>
-        </mat-expansion-panel>
-    </mat-accordion>
-
-
-
-    <mat-grid-list cols="2" rowHeight="600" [gutterSize]="'10px'">
-        <mat-grid-tile>
-
-            <form>
-
-                <h2 class="centered-title" id="infoTarea"> {{labelInfo}}</h2><br>
-
-                <mat-divider></mat-divider><br>
-
-                <mat-form-field appearance="fill" class="col-5" style="background-color: #2c1435;">
-                    <mat-label>Start time</mat-label>
-                    <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." [(ngModel)]="start_time"
-                        name="start_time">
-                </mat-form-field>
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-                <mat-form-field appearance="fill" id="priority" class="col-5">
-                    <mat-label>Priority</mat-label>
-                    <input matInput [formControl]="control" placeholder="Ej. 4, 5, 6..." [(ngModel)]="priority"
-                        name="priority">
-                </mat-form-field>
-
-                <br><br>
-                <mat-divider></mat-divider>
-                <br>
-
-                <h4 class="centered-title">Datos behaviour</h4><br>
-
-                <mat-form-field appearance="fill" id="type" class="col-5">
-                    <mat-label>Behaviour Type</mat-label>
-                    <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." type [(ngModel)]="type"
-                        name="type">
-                </mat-form-field>
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                <mat-form-field appearance="fill" id="duration" class="col-5">
-                    <mat-label>Behaviour Duration</mat-label>
-                    <input matInput [formControl]="control" placeholder="Ej. 9, 10, 11..." [(ngModel)]="duration"
-                        name="duration">
-                </mat-form-field>
-
-                <br>
-                <mat-icon *ngIf="!control.valid && control.touched" style="color:red">error</mat-icon><span *ngIf="!control.valid && control.touched" style= "color: red"> Debes rellenar todos los campos para
-                    crear la tarea. </span> 
-                <br>
-
-                <button mat-raised-button class="btn-behaviour" (click)="almacenarDatosBehaviour()">Añadir datos
-                    behaviour</button><br><br>
-                <mat-divider></mat-divider><br>
-                <button mat-raised-button [disabled]="!control.valid" class="btn-centrado" color="primary"
-                    (click)="almacenarDatosTask()">Añadir tarea</button>
+                </ol>
+            </mat-expansion-panel>
+        </mat-accordion>
 
 
 
+        <mat-grid-list cols="2"  rowHeight="650"[gutterSize]="'10px'">
+            <mat-grid-tile>
 
-                <!-- 
-                <label for="infoTarea" id="infoTarea">{{labelInfo}}</label><br>
+                <mat-tab-group>
+                    <mat-tab label="Subida manual">
 
-                <label for="startTime">Start time</label><br>
-                <input type="text" id="startTime" name="startTime"><br>
+                        <form>
 
-                <label for="priority">Priority</label><br>
-                <input type="text" id="priority" name="priority"><br><br>
+                            <h2 class="centered-title" id="infoTarea"> {{labelInfo}}</h2><br>
 
-                <p>Behaviour de la tarea:</p>
-                <label for="type">Type</label><br>
-                <input type="text" id="type" name="type"><br>
-                <label for="duration">Duration</label><br>
-                <input type="text" id="duration" name="duration"><br>
+                            <mat-divider></mat-divider><br>
 
-                <input id="clickMe1" type="button" value="Nuevo Dato Behaviour"
-                    (click)="almacenarDatosBehaviour()" /><br><br>
+                            <mat-form-field appearance="fill" class="col-5" style="background-color: #2c1435;">
+                                <mat-label>Start time</mat-label>
+                                <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..."
+                                    [(ngModel)]="start_time" name="start_time">
+                            </mat-form-field>
 
-                <input id="clickMe2" type="button" value="Almacenar Datos Tarea" (click)="almacenarDatosTask()" /><br>
--->
-            </form>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <mat-grid-tile-header>
-                Campos del JSON
-            </mat-grid-tile-header>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <pre><p>{{JSONdatos}}</p></pre>
-            <mat-grid-tile-header>
-                Archivo JSON
-            </mat-grid-tile-header>
-        </mat-grid-tile>
-    </mat-grid-list>
+
+                            <mat-form-field appearance="fill" id="priority" class="col-5">
+                                <mat-label>Priority</mat-label>
+                                <input matInput [formControl]="control" placeholder="Ej. 4, 5, 6..."
+                                    [(ngModel)]="priority" name="priority">
+                            </mat-form-field>
+
+                            <br><br>
+                            <mat-divider></mat-divider>
+                            <br>
+
+                            <h4 class="centered-title">Datos behaviour</h4><br>
+
+                            <mat-form-field appearance="fill" id="type" class="col-5">
+                                <mat-label>Behaviour Type</mat-label>
+                                <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." type
+                                    [(ngModel)]="type" name="type">
+                            </mat-form-field>
+
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <mat-form-field appearance="fill" id="duration" class="col-5">
+                                <mat-label>Behaviour Duration</mat-label>
+                                <input matInput [formControl]="control" placeholder="Ej. 9, 10, 11..."
+                                    [(ngModel)]="duration" name="duration">
+                            </mat-form-field>
+
+                            <br>
+                            <mat-icon *ngIf="!control.valid && control.touched" style="color:red">error</mat-icon><span
+                                *ngIf="!control.valid && control.touched" style="color: red"> Debes rellenar todos los
+                                campos
+                                para
+                                crear la tarea. </span>
+                            <br>
+
+                            <button mat-raised-button class="btn-behaviour" (click)="almacenarDatosBehaviour()">Añadir
+                                datos
+                                behaviour</button><br><br>
+                            <mat-divider></mat-divider><br>
+                            <button mat-raised-button [disabled]="!control.valid" class="btn-centrado" color="primary"
+                                (click)="almacenarDatosTask()">Añadir tarea</button>
+
+
+
+
+                            <!-- 
+                        <label for="infoTarea" id="infoTarea">{{labelInfo}}</label><br>
+        
+                        <label for="startTime">Start time</label><br>
+                        <input type="text" id="startTime" name="startTime"><br>
+        
+                        <label for="priority">Priority</label><br>
+                        <input type="text" id="priority" name="priority"><br><br>
+        
+                        <p>Behaviour de la tarea:</p>
+                        <label for="type">Type</label><br>
+                        <input type="text" id="type" name="type"><br>
+                        <label for="duration">Duration</label><br>
+                        <input type="text" id="duration" name="duration"><br>
+        
+                        <input id="clickMe1" type="button" value="Nuevo Dato Behaviour"
+                            (click)="almacenarDatosBehaviour()" /><br><br>
+        
+                        <input id="clickMe2" type="button" value="Almacenar Datos Tarea" (click)="almacenarDatosTask()" /><br>
+        -->
+                        </form>
+
+
+
+                    </mat-tab>
+                    <mat-tab label=" Subida de archivo">
+                        <div class="subida-archivo-completa">
+                            <div class="file-select">
+                                <input #fileInput type='file' (change)="fileChanged($event)">
+                            </div><br>
+
+                            <button mat-raised-button color="primary" (click)="uploadDocument(archivo)">Cargar
+                                datos</button>
+                        </div>
+
+                    </mat-tab>
+                </mat-tab-group>
+
+
+
+                <mat-grid-tile-header>
+                    Campos del JSON
+                </mat-grid-tile-header>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <pre><p>{{texto_JSONdatos}}</p></pre>
+                <mat-grid-tile-header>
+                    Datos cargados
+                </mat-grid-tile-header>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+    </div>
+
+
 
 </div>
