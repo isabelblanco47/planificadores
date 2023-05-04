@@ -18,57 +18,67 @@ export class EjemploListComponent {
   }
 
   /** DECLARACIÓN DE LOS JSON DE EJEMPLO **/
-  sample_cpu_json = { "tasks": [
-    { "command": "T1", "start_time": 0, "priority": 99, "behaviour": [
-      { "type": 0, "duration": 4 }]
-    }, 
-    { "command": "T2", "start_time": 0, "priority": 99, "behaviour": [
-      { "type": 0, "duration": 4 }]
-    },
-    { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [
-      { "type": 0, "duration": 4 }]
-    }]
+  sample_cpu_json = {
+    "tasks": [
+      {
+        "command": "T1", "start_time": 0, "priority": 99, "behaviour": [
+          { "type": 0, "duration": 4 }]
+      },
+      {
+        "command": "T2", "start_time": 0, "priority": 99, "behaviour": [
+          { "type": 0, "duration": 4 }]
+      },
+      {
+        "command": "T3", "start_time": 0, "priority": 99, "behaviour": [
+          { "type": 0, "duration": 4 }]
+      }]
   }
 
-  sample_interactive = { 
+  sample_interactive = {
     "tasks": [
-      { "command": "T1", "start_time": 2, "priority": 9, "behaviour": [
-        { "type": 0, "duration": 2 }, 
-        { "type": 1, "duration": 4 }, 
-        { "type": 0, "duration": 2 }] 
-      }, 
-      { "command": "T2", "start_time": 0, "priority": 1, "behaviour": [
-        { "type": 0, "duration": 4 },
-        { "type": 1, "duration": 2 },
-        { "type": 0, "duration": 1 }] 
-      }, 
-      { "command": "T3", "start_time": 0, "priority": 2, "behaviour": [
-        { "type": 0, "duration": 4 }, 
-        { "type": 1, "duration": 5 }, 
-        { "type": 0, "duration": 1 }, 
-        { "type": 2, "duration": 10 }, 
-        { "type": 0, "duration": 3 }] 
-      }] 
-    }
+      {
+        "command": "T1", "start_time": 2, "priority": 9, "behaviour": [
+          { "type": 0, "duration": 2 },
+          { "type": 1, "duration": 4 },
+          { "type": 0, "duration": 2 }]
+      },
+      {
+        "command": "T2", "start_time": 0, "priority": 1, "behaviour": [
+          { "type": 0, "duration": 4 },
+          { "type": 1, "duration": 2 },
+          { "type": 0, "duration": 1 }]
+      },
+      {
+        "command": "T3", "start_time": 0, "priority": 2, "behaviour": [
+          { "type": 0, "duration": 4 },
+          { "type": 1, "duration": 5 },
+          { "type": 0, "duration": 1 },
+          { "type": 2, "duration": 10 },
+          { "type": 0, "duration": 3 }]
+      }]
+  }
 
   sample_io_bound = {
     "tasks": [
-      { "command": "T1", "start_time": 0, "priority": 99, "behaviour": [
-        { "type": 0, "duration": 1 },
-        { "type": 1, "duration": 10 },
-        { "type": 0, "duration": 1 }]
-      }, 
-      { "command": "T2", "start_time": 2, "priority": 99, "behaviour": [
-        { "type": 0, "duration": 1 }, 
-        { "type": 2, "duration": 10 },
-        { "type": 0, "duration": 1 }] 
+      {
+        "command": "T1", "start_time": 0, "priority": 99, "behaviour": [
+          { "type": 0, "duration": 1 },
+          { "type": 1, "duration": 10 },
+          { "type": 0, "duration": 1 }]
       },
-      { "command": "T3", "start_time": 0, "priority": 99, "behaviour": [
-        { "type": 0, "duration": 4 },
-        { "type": 1, "duration": 10 },
-        { "type": 0, "duration": 1 }]
+      {
+        "command": "T2", "start_time": 2, "priority": 99, "behaviour": [
+          { "type": 0, "duration": 1 },
+          { "type": 2, "duration": 10 },
+          { "type": 0, "duration": 1 }]
+      },
+      {
+        "command": "T3", "start_time": 0, "priority": 99, "behaviour": [
+          { "type": 0, "duration": 4 },
+          { "type": 1, "duration": 10 },
+          { "type": 0, "duration": 1 }]
       }]
-    }
+  }
 
   selected = ""
 
@@ -124,31 +134,36 @@ export class EjemploListComponent {
     let algorithm = new FIFO();
     let scheduler = new Scheduler(algorithm);
 
-    let example = this.sample_io_bound;
+    
+    if (this.selected != undefined) {
+      const example = this.opciones_ejemplo.find((ejemplo) => ejemplo.opcion === this.selected).value;
+      // Load the items into the scheduler
+      for (let i = 0; i < example.tasks.length; i++) {
 
-    // Load the items into the scheduler
-    for (let i = 0; i < example.tasks.length; i++) {
+        // Allocate the TCB
+        let tcb = new TaskControlBlock(0,
+          example.tasks[i].command,
+          example.tasks[i].priority);
 
-      // Allocate the TCB
-      let tcb = new TaskControlBlock(0,
-        example.tasks[i].command,
-        example.tasks[i].priority);
+        // Create the task descriptor attached to the TCB
+        let task = new TaskDescriptor(tcb, example.tasks[i].start_time);
 
-      // Create the task descriptor attached to the TCB
-      let task = new TaskDescriptor(tcb, example.tasks[i].start_time);
+        // Load the behaviour into the task descriptor
+        for (let j = 0; j < example.tasks[i].behaviour.length; j++) {
+          task.appendBehavior(example.tasks[i].behaviour[j].type,
+            example.tasks[i].behaviour[j].duration);
+        }
 
-      // Load the behaviour into the task descriptor
-      for (let j = 0; j < example.tasks[i].behaviour.length; j++) {
-        task.appendBehavior(example.tasks[i].behaviour[j].type, 
-          example.tasks[i].behaviour[j].duration);
+        scheduler.appendDescriptor(task);
+
       }
 
-      scheduler.appendDescriptor(task);
+      // Let's go!
+      scheduler.run();
 
     }
 
-    // Let's go!
-    scheduler.run();
+
 
   }
 
@@ -169,6 +184,11 @@ export class EjemploListComponent {
     console.warn("Has seleccionado Round Robin")
     console.log(" ----------------- ")
   }
+
+
+  /**
+   * PRUEBAS GENERACION DE TABLAS A PARTIR DE UN JSON
+   */
 }
 
 

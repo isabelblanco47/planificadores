@@ -3,6 +3,10 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatCardTitleGroup } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TaskDescriptor } from 'src/app/shared/shared/MAIN/domain/Descriptor';
+import { FIFO } from 'src/app/shared/shared/MAIN/domain/FIFO';
+import { Scheduler } from 'src/app/shared/shared/MAIN/domain/Scheduler';
+import { TaskControlBlock } from 'src/app/shared/shared/MAIN/domain/TaskControlBlock';
 
 @Component({
   selector: 'app-planificadores-list',
@@ -20,7 +24,7 @@ export class PlanificadoresListComponent {
   priority = "";
   contador = 1
   labelInfo = ""
-  task: any[] = []
+  tasks: any[] = []
   camposValidos = false;
   texto_JSONdatos = ""
 
@@ -34,7 +38,7 @@ export class PlanificadoresListComponent {
     this.labelInfo = "Información de la Tarea " + this.contador;
   }
 
-  JSONdatos = { "task": this.task }
+  JSONdatos = { "tasks": this.tasks }
   generarJSON() {
     let tarea = "T" + this.contador
     let temp = {
@@ -43,10 +47,10 @@ export class PlanificadoresListComponent {
       "priority": this.priority,
       "behaviour": this.behaviourDict,
     }
-    this.JSONdatos.task.push(temp)
+    this.JSONdatos.tasks.push(temp)
     //delete this.JSONdatos.task[0] // Se elemina el primer campo del diccionario por 
     console.log("CAMPOS JSON PRUEBA 2", this.JSONdatos)
-    this.texto_JSONdatos = JSON.parse(this.JSONdatos.toString())
+    this.texto_JSONdatos = JSON.stringify(this.JSONdatos).toString()
   }
 
   almacenarDatosTask() {
@@ -87,7 +91,7 @@ export class PlanificadoresListComponent {
   fileChanged(e: any) {
     this.archivo = e.target.files[0];
   }
-  uploadDocument(file:any) {
+  uploadDocument(file: any) {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       console.log(fileReader.result);
@@ -105,5 +109,70 @@ export class PlanificadoresListComponent {
         this.openSnackBar("El archivo no es un JSON válido. Selecciona un archivo válido.", "")
       }
     };
+  }
+
+  /**
+ * LLAMADA DE LOS DIFERENTES SIMULADORES
+ */
+
+  pulsadoFifo(): void {
+
+    let algorithm = new FIFO();
+    let scheduler = new Scheduler(algorithm);
+
+
+    if (this.texto_JSONdatos != undefined) {
+      console.warn( "-------------------" )
+      console.warn(this.texto_JSONdatos,  "JSON DATOS")
+      const contenido = JSON.parse(this.texto_JSONdatos)
+      console.warn(contenido,  "JSON CONVERTIDO")
+      console.log(contenido.tasks)
+      // Load the items into the scheduler
+      for (let i = 0; i < contenido.tasks.length; i++) {
+
+        // Allocate the TCB
+        let tcb = new TaskControlBlock(0,
+          contenido.tasks[i].command,
+          contenido.tasks[i].priority);
+
+        // Create the task descriptor attached to the TCB
+        let task = new TaskDescriptor(tcb, contenido.tasks[i].start_time);
+
+        // Load the behaviour into the task descriptor
+        for (let j = 0; j < contenido.tasks[i].behaviour.length; j++) {
+          task.appendBehavior(contenido.tasks[i].behaviour[j].type,
+            contenido.tasks[i].behaviour[j].duration);
+        }
+
+        scheduler.appendDescriptor(task);
+
+      }
+
+      // Let's go!
+      scheduler.run();
+
+    }
+
+
+
+  }
+
+
+  pulsadoPriorityNonPreemptive(): void {
+    console.log(" ----------------- ")
+    console.warn("Has seleccionado Priority Preemptive")
+    console.log(" ----------------- ")
+  }
+
+  pulsadoPriorityPreemtive(): void {
+    console.log(" ----------------- ")
+    console.warn("Has seleccionado Priority Non Preemptive")
+    console.log(" ----------------- ")
+  }
+
+  pulsadoRoundRobin(): void {
+    console.log(" ----------------- ")
+    console.warn("Has seleccionado Round Robin")
+    console.log(" ----------------- ")
   }
 }

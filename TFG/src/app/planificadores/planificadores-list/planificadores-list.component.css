@@ -96,3 +96,9 @@ p.textoError {
   .mat-tab-group {
     width: 100%;
   }
+
+  .chips-div {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
