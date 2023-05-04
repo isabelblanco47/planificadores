@@ -34,7 +34,6 @@ export class PlanificadoresListComponent {
 
   ngOnInit() {
     console.warn("NGONINT")
-    console.log("CONTROL", this.control)
     this.labelInfo = "Información de la Tarea " + this.contador;
   }
 
@@ -50,7 +49,7 @@ export class PlanificadoresListComponent {
     this.JSONdatos.tasks.push(temp)
     //delete this.JSONdatos.task[0] // Se elemina el primer campo del diccionario por 
     console.log("CAMPOS JSON PRUEBA 2", this.JSONdatos)
-    this.texto_JSONdatos = JSON.stringify(this.JSONdatos).toString()
+    this.texto_JSONdatos = JSON.stringify(this.JSONdatos, null, 1) // JSON.stringify(this.JSONdatos).toString()
   }
 
   almacenarDatosTask() {
