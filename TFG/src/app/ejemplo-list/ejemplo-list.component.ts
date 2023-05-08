@@ -185,8 +185,6 @@ export class EjemploListComponent {
       this.dataSource = this.rowsTabla;
     }
 
-
-
   }
 
   pulsadoPriorityNonPreemptive(): void {

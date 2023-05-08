@@ -49,6 +49,10 @@
     justify-content: center;
 }
 
+.mat-grid-tile  {
+    background-color: #544175
+  }
+
 .tituloCard {
     font-size: 28px;
     color: \$text_color;
@@ -60,7 +64,10 @@
     
   }
 
-
 .todos {
-    height: 100%;
-  }
+    margin: 40px;
+}
+
+.tabla-planificador {
+    background-color: #544175 !important;
+}

@@ -1,13 +1,6 @@
- /* .todos  {
-    display: block;
-    margin: 20px;
-    margin-top: 0px;
-    padding: 20px;
-    border-width: 20px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden
-    } */
+  .todos {
+    margin: 40px;
+    } 
  
 
 mat-grid-tile {
@@ -102,3 +95,4 @@ p.textoError {
     display: flex;
     justify-content: center;
 }
+

@@ -7,11 +7,24 @@ import { TaskDescriptor } from 'src/app/shared/shared/MAIN/domain/Descriptor';
 import { FIFO } from 'src/app/shared/shared/MAIN/domain/FIFO';
 import { Scheduler } from 'src/app/shared/shared/MAIN/domain/Scheduler';
 import { TaskControlBlock } from 'src/app/shared/shared/MAIN/domain/TaskControlBlock';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
+  /**
+   * ANIMACION TABLA
+   */
+  export const tableAnimation = trigger('tableAnimation', [
+    transition(':enter', [
+      style({ opacity: 0 }),
+      animate('1s ease-out', style({ opacity: 1 })),
+    ]),
+  ]);
+  
 
 @Component({
   selector: 'app-planificadores-list',
   templateUrl: './planificadores-list.component.html',
-  styleUrls: ['./planificadores-list.component.css']
+  styleUrls: ['./planificadores-list.component.css'],
+  animations: [tableAnimation]
 })
 export class PlanificadoresListComponent {
 
@@ -27,6 +40,13 @@ export class PlanificadoresListComponent {
   tasks: any[] = []
   camposValidos = false;
   texto_JSONdatos = ""
+  /** GENERACION TABLA PLANIFICADOR */
+  generarTabla = false
+  headersTabla: any = []
+  contenidoTabla: any = []
+  rowsTabla: any[][] = [];
+  dataSource: any[] = [];
+  selectedFileName = "";
 
   constructor(private router: Router, private _snackBar: MatSnackBar) {
 
@@ -89,6 +109,7 @@ export class PlanificadoresListComponent {
   archivo: any;
   fileChanged(e: any) {
     this.archivo = e.target.files[0];
+    this.selectedFileName = this.archivo.name;
   }
   uploadDocument(file: any) {
     let fileReader = new FileReader();
@@ -115,16 +136,17 @@ export class PlanificadoresListComponent {
  */
 
   pulsadoFifo(): void {
+    this.generarTabla = true
 
     let algorithm = new FIFO();
     let scheduler = new Scheduler(algorithm);
 
 
     if (this.texto_JSONdatos != undefined) {
-      console.warn( "-------------------" )
-      console.warn(this.texto_JSONdatos,  "JSON DATOS")
+      console.warn("-------------------")
+      console.warn(this.texto_JSONdatos, "JSON DATOS")
       const contenido = JSON.parse(this.texto_JSONdatos)
-      console.warn(contenido,  "JSON CONVERTIDO")
+      console.warn(contenido, "JSON CONVERTIDO")
       console.log(contenido.tasks)
       // Load the items into the scheduler
       for (let i = 0; i < contenido.tasks.length; i++) {
@@ -149,12 +171,23 @@ export class PlanificadoresListComponent {
 
       // Let's go!
       scheduler.run();
-      let headers = scheduler.headers
-      console.log("HEADERS TABLA", headers)
+      this.headersTabla = scheduler.headers
+      this.contenidoTabla = scheduler.rows
+      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
 
+      const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
+
+      for (let i = 0; i < numRows; i++) {
+        const row: any[] = [];
+        for (let j = 0; j < this.headersTabla.length; j++) {
+          const index = (i * this.headersTabla.length) + j;
+          row.push(this.contenidoTabla[index]);
+        }
+        this.rowsTabla.push(row);
+      }
+
+      this.dataSource = this.rowsTabla;
     }
-
-
 
   }
 
@@ -176,4 +209,7 @@ export class PlanificadoresListComponent {
     console.warn("Has seleccionado Round Robin")
     console.log(" ----------------- ")
   }
+
+
+
 }
