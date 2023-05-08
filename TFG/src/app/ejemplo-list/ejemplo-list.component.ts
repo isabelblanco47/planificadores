@@ -5,6 +5,7 @@ import { FIFO } from '../shared/shared/MAIN/domain/FIFO';
 import { Scheduler } from '../shared/shared/MAIN/domain/Scheduler';
 import { TaskDescriptor } from '../shared/shared/MAIN/domain/Descriptor';
 import { TaskControlBlock } from '../shared/shared/MAIN/domain/TaskControlBlock';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-ejemplo-list',
@@ -16,6 +17,11 @@ export class EjemploListComponent {
   constructor(private router: Router) {
 
   }
+  generarTabla = false
+  headersTabla: any = []
+  contenidoTabla: any = []
+  rowsTabla: any[][] = [];
+  dataSource: any[] = [];
 
   /** DECLARACIÓN DE LOS JSON DE EJEMPLO **/
   sample_cpu_json = {
@@ -130,11 +136,12 @@ export class EjemploListComponent {
 
 
   pulsadoFifo(): void {
+    this.generarTabla = true
 
     let algorithm = new FIFO();
     let scheduler = new Scheduler(algorithm);
 
-    
+
     if (this.selected != undefined) {
       const example = this.opciones_ejemplo.find((ejemplo) => ejemplo.opcion === this.selected).value;
       // Load the items into the scheduler
@@ -160,7 +167,22 @@ export class EjemploListComponent {
 
       // Let's go!
       scheduler.run();
+      this.headersTabla = scheduler.headers
+      this.contenidoTabla = scheduler.rows
+      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
 
+      const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
+
+      for (let i = 0; i < numRows; i++) {
+        const row: any[] = [];
+        for (let j = 0; j < this.headersTabla.length; j++) {
+          const index = (i * this.headersTabla.length) + j;
+          row.push(this.contenidoTabla[index]);
+        }
+        this.rowsTabla.push(row);
+      }
+  
+      this.dataSource = this.rowsTabla;
     }
 
 
@@ -187,8 +209,10 @@ export class EjemploListComponent {
 
 
   /**
-   * PRUEBAS GENERACION DE TABLAS A PARTIR DE UN JSON
+   * GENERACION DE TABLAS DEL PLANIFICADOR
    */
+
+
 }
 
 

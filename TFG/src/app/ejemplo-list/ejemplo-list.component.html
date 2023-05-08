@@ -170,25 +170,27 @@
     <br>
     <mat-divider></mat-divider>
     <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
+<table mat-table *ngIf="generarTabla" [dataSource]="dataSource" class="mat-elevation-z8">
 
+    <ng-container *ngFor="let header of headersTabla; let i = index" [matColumnDef]="header">
+      <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
+      <td mat-cell *matCellDef="let element">{{ element[i] }}</td>
+    </ng-container>
 
+    <tr mat-header-row *matHeaderRowDef="headersTabla"></tr>
+    <tr mat-row *matRowDef="let row; columns: headersTabla;"></tr>
 
-
-
-
-    <!--
-                <div class="chips-div">
-        <mat-chip-listbox aria-label="Scheduling selection">
-                <mat-chip-option color="dark">FIFO</mat-chip-option>
-                <mat-chip-option color="primary">Priority: Preemptive</mat-chip-option>
-                <mat-chip-option color="accent" selected>Priority: Non Preemptive</mat-chip-option>
-                <mat-chip-option color="warn">Round-Robin</mat-chip-option>
-              </mat-chip-listbox>
-</div>
-              <br>
-              <mat-divider></mat-divider>
-              <br>
-            -->
+  </table>
 
 </div>

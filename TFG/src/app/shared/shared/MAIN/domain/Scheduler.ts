@@ -4,18 +4,18 @@ import { TaskControlBlock, TaskState } from "./TaskControlBlock";
 export class SchedulingState {
 
     // The task that is currently running
-    running_task : TaskControlBlock | null;
+    running_task: TaskControlBlock | null;
 
     // The task that is currently using the hard disk
-    hard_disk_task : TaskControlBlock | null;
+    hard_disk_task: TaskControlBlock | null;
 
     // The task that is currently using the keyboard
-    keyboard_task : TaskControlBlock | null;
+    keyboard_task: TaskControlBlock | null;
 
     // The constructor will take null as default value for all the fields
-    constructor(running_task: TaskControlBlock | null = null, 
-                hard_disk_task: TaskControlBlock | null = null,
-                keyboard_task: TaskControlBlock | null = null) {
+    constructor(running_task: TaskControlBlock | null = null,
+        hard_disk_task: TaskControlBlock | null = null,
+        keyboard_task: TaskControlBlock | null = null) {
 
         this.running_task = running_task;
         this.hard_disk_task = hard_disk_task;
@@ -31,93 +31,101 @@ export interface SchedulingAlgorithm {
      * This method is called when a scheduling instant is comppleted. It
      * must trigger the update of the scheduler's state.
      */
-    schedule() : void;
+    schedule(): void;
 
     /**
      * This method is called every time a new task is added to the scheduler.
      * 
      * @param task the task to be added to the scheduler
      */
-    startTask(task: TaskControlBlock) : void;
+    startTask(task: TaskControlBlock): void;
 
     /**
      * This method is called when the running task is removed from the 
      * scheduler.
      */
-    exitTask() : void;
+    exitTask(): void;
 
     /**
      * This method is called every time the clock ticks. 
      */
-    clockTick() : void;
+    clockTick(): void;
 
     /**
      * This method is called every time the running task yields the CPU to use 
      * the hard disk.
      */
-    yieldHardDisk() : void;
+    yieldHardDisk(): void;
 
     /**
      * This method is called every time an I/O operation on the hard disk ends.
      */
-    ioHardDiskIRQ() : void;
+    ioHardDiskIRQ(): void;
 
     /**
      * This method is called every time the running task yields the CPU to wait
      * for the keyboard. 
      */
-    yieldKeyboard() : void;
+    yieldKeyboard(): void;
 
     /**
      * This method is called every time an I/O operation on the keyboard ends.
      */
-    ioKeyboardIRQ() : void;
+    ioKeyboardIRQ(): void;
 
     /**
      * This method returns the task that is currently running or null if no
      * task is currently running.
      */
-    getRunningTask() : TaskControlBlock | null;
+    getRunningTask(): TaskControlBlock | null;
 
     /**
      * This method returns the task that is currently waiting for a hard disk
      * operation to complete or null if no task is currently waiting.
      */
-    getHardDiskTask() : TaskControlBlock | null;
+    getHardDiskTask(): TaskControlBlock | null;
 
     /**
      * This method returns the task that is currently waiting for a keyboard
      * event to occur or null if no task is currently waiting.
      */
-    getKeyboardTask() : TaskControlBlock | null;
+    getKeyboardTask(): TaskControlBlock | null;
 
 }
 
 export class Scheduler {
 
     // The scheduling algorithm to be used
-    algorithm : SchedulingAlgorithm;
+    algorithm: SchedulingAlgorithm;
 
     // The number of living tasks
-    living_tasks : number = 0;
+    living_tasks: number = 0;
 
     // The next task id to be assigned
-    next_task_id : number = 1;
+    next_task_id: number = 1;
 
     // The current time in clock ticks
-    clock : number = 0;
+    clock: number = 0;
 
     // The list of task descriptors
     task_descriptors: TaskDescriptor[] = [];
 
     // Map that associates a task control block to a task descriptor
-    tcb_to_descriptor : Map<TaskControlBlock, TaskDescriptor> = new Map();
+    tcb_to_descriptor: Map<TaskControlBlock, TaskDescriptor> = new Map();
 
-    
+    // List of headers and row content of the status: needed to create the resultant table of the execution
+    headers: string[] = [];
+    rows: any[] = [];
+    headersAdded: boolean = false
+    clockAdded: boolean = false
+    tasksAdded: boolean = false
+    otherTasksAdded: boolean = false
+
+
     constructor(algorithm: SchedulingAlgorithm) {
 
         this.algorithm = algorithm;
-    
+
     }
 
     /**
@@ -170,7 +178,7 @@ export class Scheduler {
             // from the scheduler.
 
             let prev_running_task = this.algorithm.getRunningTask();
-            
+
             if (prev_running_task !== null) {
 
                 // Get the descriptor of the running task
@@ -207,7 +215,7 @@ export class Scheduler {
                             throw new Error("Malformed behavior: CPU behavior not expected");
                         }
                     }
-                    
+
                 }
             }
 
@@ -243,7 +251,7 @@ export class Scheduler {
                             throw new Error("Malformed behavior: expected CPU behavior");
                         }
                     }
-                    
+
                 }
             }
 
@@ -273,7 +281,7 @@ export class Scheduler {
                             throw new Error("Malformed behavior: expected CPU behavior");
                         }
                     }
-                    
+
                 }
             }
 
@@ -283,11 +291,11 @@ export class Scheduler {
 
             for (let descriptor of this.task_descriptors) {
                 if (descriptor.start_time === this.clock) {
-    
+
                     descriptor.tcb.task_id = this.next_task_id;
-    
+
                     this.next_task_id = this.next_task_id + 1;
-    
+
                     this.algorithm.startTask(descriptor.tcb);
                 }
             }
@@ -299,13 +307,32 @@ export class Scheduler {
 
         }
 
+
     }
 
-    printStatus() : void {
+    printStatus(): void {
 
         console.log("Clock t = " + this.clock);
+        this.rows.push(this.clock)
 
         for (let descriptor of this.task_descriptors) {
+
+            // Store the info of the status of descriptor
+            // header
+            // info
+
+            if (!this.headersAdded) {
+                this.headers = ["Clock time"]
+
+                for (let i = 0; i < this.task_descriptors.length; i++) {
+                    this.headers.push("Task " + (i + 1))
+
+                }
+                this.headers.push("Hard Disk Task")
+                this.headers.push("Keyboard Task")
+                this.headersAdded = true
+            }
+
 
             // Print "Task <task_id> - <state>". State will be one of
             // the following:
@@ -316,15 +343,24 @@ export class Scheduler {
 
             if (descriptor.tcb.state === TaskState.RUNNING) {
                 console.log("Task " + descriptor.tcb.command + " - State: running");
+                this.rows.push(descriptor.tcb.command + " running")
             } else if (descriptor.tcb.state === TaskState.READY) {
                 console.log("Task " + descriptor.tcb.command + " - State: ready");
+                this.rows.push(descriptor.tcb.command + " ready");
             } else if (descriptor.tcb.state === TaskState.WAITING) {
-                console.log("Task " + descriptor.tcb.command + " - State: waiting");
+                console.log(descriptor.tcb.command + " - State: waiting");
+                this.rows.push("Task " + descriptor.tcb.command + " waiting");
             } else if (descriptor.tcb.state === TaskState.TERMINATED) {
                 console.log("Task " + descriptor.tcb.command + " - State: terminated");
+                this.rows.push(descriptor.tcb.command + " terminated");
             } else {
                 console.log("Task " + descriptor.tcb.command + " - State: inactive");
+                this.rows.push(descriptor.tcb.command + " inactive");
             }
+
+
+
+
 
         }
 
@@ -332,38 +368,24 @@ export class Scheduler {
 
         if (hard_disk_task !== null) {
             console.log("Hard disk task: " + hard_disk_task.command);
+            this.rows.push("HD task: " + hard_disk_task.command);
         } else {
             console.log("Hard disk task: none");
+            this.rows.push("HD task: none");
         }
 
         let keyboard_task = this.algorithm.getKeyboardTask();
 
         if (keyboard_task !== null) {
             console.log("Keyboard task: " + keyboard_task.command);
+            this.rows.push("Keyboard task: " + keyboard_task.command);
         } else {
             console.log("Keyboard task: none");
+            this.rows.push("Keyboard task: none");
         }
 
 
+
     }
-
-    /**
-     * GENERACIÓN DE LA TABLA DINÁMICA DEL STATUS
-     */
-
-    displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-    
-    dataSource = [
-      { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-      { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-      { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-      { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-      { position: 5, name: 'Boron', weight: 10.81, symbol: 'B' },
-      { position: 6, name: 'Carbon', weight: 12.011, symbol: 'C' },
-      { position: 7, name: 'Nitrogen', weight: 14.007, symbol: 'N' },
-      { position: 8, name: 'Oxygen', weight: 15.999, symbol: 'O' },
-      { position: 9, name: 'Fluorine', weight: 18.998, symbol: 'F' },
-      { position: 10, name: 'Neon', weight: 20.18, symbol: 'Ne' },
-    ];
 
 }

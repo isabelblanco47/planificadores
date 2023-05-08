@@ -50,7 +50,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatSelectModule,
     MatTableModule,
     MatChipsModule,
-    MatTabsModule
+    MatTabsModule,
 
     
   ]

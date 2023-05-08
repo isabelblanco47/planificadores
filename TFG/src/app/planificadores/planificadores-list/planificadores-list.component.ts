@@ -149,6 +149,8 @@ export class PlanificadoresListComponent {
 
       // Let's go!
       scheduler.run();
+      let headers = scheduler.headers
+      console.log("HEADERS TABLA", headers)
 
     }
 
