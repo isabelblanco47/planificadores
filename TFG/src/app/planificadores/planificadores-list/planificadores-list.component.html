@@ -17,16 +17,14 @@
                     {{panelOpenState ? 'Pulsa para cerrar esta ventana.' : 'Pulsa para más información.'}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
+
+
+            El <strong>primer paso</strong> es importar los datos de las tareas que ejecutaremos en el planificador.
+            Podemos hacerlo mediante dos métodos diferentes:
             <ol>
-                <li>
-                    El <strong>primer paso</strong> es describir el archivo JSON en el que indicaremos los datos
-                    con
-                    los
-                    que
-                    se ejecutarán los planificadores. La información que estará contenida en el archivo viene
-                    dada
-                    en
-                    tareas. Cada una de estas tareas contiene la siguiente información:<br>
+                <li><strong>Subida de datos manual.</strong> Especificamos en el formulario la información que describe
+                    cada tarea.
+                    Cada una de estas tareas contiene la siguiente información:<br>
                     <ul>
                         <li><strong>Start time:</strong> Valor numérico que hace referencia al instante de
                             tiempo en
@@ -50,10 +48,42 @@
                                 comportamiento de la tarea.</li>
                         </ul>
                     </ul>
+                    <p style="color:#5678ef"><strong>Información relevante: Se deben introducir primeramente los datos
+                            del behaviour. Como mínimo debe tener un tipo cada tarea. Una vez añadidos mediante el botón
+                            <i>Añadir datos behaviour</i>, podremos añadir la tarea con el botón <i>Añadir datos
+                                behaviour</i>. </strong></p>
 
+                </li>
+                <li>
+                    <strong>Subida de archivo local.</strong> Debemos seleccionar el archivo en nuestro equipo. Este
+                    debe tener formato JSON, como en la estructura siguiente:
+                    <pre>
+                    &#123;
+                        "tasks": [
+                        &#123;
+                            "command": "T1", "start_time": 0, "priority": 99, "behaviour": [
+                            &#123; "type": 0, "duration": 4 &#125;]
+                        &#125;,
+                            &#123;
+                            "command": "T2", "start_time": 0, "priority": 99, "behaviour": [
+                            &#123; "type": 0, "duration": 4 &#125;]
+                        &#125;,
+                            &#123;
+                            "command": "T3", "start_time": 0, "priority": 99, "behaviour": [
+                            &#123; "type": 0, "duration": 4 &#125;]
+                        &#125;]
+                    &#125;
+                        </pre>
+                    <p style="color:#5678ef"><strong>Información relevante: En caso de no tener un archivo correcto,
+                            saldrá un mensaje de error</strong></p>
                 </li>
 
             </ol>
+            Veremos en los datos cargados el resultado de la importación manual o local.
+            <br><br>El <strong>segundo paso</strong> es seleccionar el planificador que queremos que ejecute la
+            planificación de entre las opciones mostradas. Se mostrará una tabla con los resultados por cada tiempo de
+            reloj.
+
         </mat-expansion-panel>
     </mat-accordion>
 
@@ -73,7 +103,7 @@
                 <mat-form-field appearance="fill" class="col-5" style="color: #2c1435;">
                     <mat-label>Start time</mat-label>
                     <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." [(ngModel)]="start_time"
-                        name="start_time"  #startTimeField>
+                        name="start_time" #startTimeField>
                 </mat-form-field>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -94,7 +124,7 @@
                 <mat-form-field appearance="fill" id="type" class="col-5">
                     <mat-label>Behaviour Type</mat-label>
                     <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." type [(ngModel)]="type"
-                        name="type"  #typeField>
+                        name="type" #typeField>
                 </mat-form-field>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -114,12 +144,15 @@
                     crear la tarea. </span>
                 <br>
 
-                <button mat-raised-button [disabled]="!datosBehaviourCompletados() || sinRellenar(type)|| sinRellenar(duration)" class="btn-behaviour" (click)="almacenarDatosBehaviour()">Añadir
+                <button mat-raised-button
+                    [disabled]="!datosBehaviourCompletados() || sinRellenar(type)|| sinRellenar(duration)"
+                    class="btn-behaviour" (click)="almacenarDatosBehaviour()">Añadir
                     datos
                     behaviour</button><br><br>
                 <mat-divider></mat-divider><br>
-                <button mat-raised-button [disabled]="!datosBehaviourGuardados || sinRellenar(start_time)|| sinRellenar(priority) || !control.valid" class="btn-centrado" color="primary"
-                    (click)="almacenarDatosTask()">Añadir tarea</button>
+                <button mat-raised-button
+                    [disabled]="!datosBehaviourGuardados || sinRellenar(start_time)|| sinRellenar(priority) || !control.valid"
+                    class="btn-centrado" color="primary" (click)="almacenarDatosTask()">Añadir tarea</button>
 
 
 
@@ -221,7 +254,9 @@
 
         <ng-container *ngFor="let header of headersTabla; let i = index" [matColumnDef]="header">
             <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
-            <td mat-cell *matCellDef="let element" [ngStyle]="{ color: (element[i] === 'Running') ? 'green' : (element[i] === 'Ready') ? 'yellow' : (element[i] === 'Terminated') ? 'red' : 'white' }">{{ element[i] }}</td>
+            <td mat-cell *matCellDef="let element"
+                [ngStyle]="{ color: (element[i] === 'Running') ? 'green' : (element[i] === 'Ready') ? 'yellow' : (element[i] === 'Terminated') ? 'red' : 'white' }">
+                {{ element[i] }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="headersTabla"></tr>
