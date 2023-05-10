@@ -71,3 +71,29 @@
 .tabla-planificador {
     background-color: #544175 !important;
 }
+.legend {
+  border-collapse: collapse;
+  width: 200px;
+  margin: 20px;
+}
+
+.color-cell {
+  width: 20px;
+  height: 20px;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.yellow {
+  background-color:yellow;
+}
+
+.label-cell {
+  padding-left: 10px;
+}
