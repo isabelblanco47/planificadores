@@ -1,5 +1,4 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { MatCardTitleGroup } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -49,7 +48,6 @@ export class PlanificadoresListComponent {
   dataSource: any[] = [];
   selectedFileName = "";
   /* VARIABLES DE CONTROL FORMULARIO */
-  control: FormControl = new FormControl("", [Validators.required])
   start_time = "";
   type = "";
   duration = "";
@@ -104,7 +102,14 @@ export class PlanificadoresListComponent {
       this.behaviourDict.push(temp)
       this.typeField.nativeElement.value = '';
       this.durationField.nativeElement.value = '';
+      this.type = "";
+      this.duration = "";
+      this.start_time = this.start_time;
       this.datosBehaviourGuardados = true;
+      console.log("TYPE CONTENT", this.type)
+      console.log("DURATION CONTENT", this.duration)
+      console.log("Start CONTENT", this.start_time)
+      console.log("Prio CONTENT", this.priority)
     }
     console.log("BEHAVIOUR", this.behaviourDict)
   }

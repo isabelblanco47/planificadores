@@ -25,12 +25,11 @@ h4.centered-title {
     text-align: center;
 }
 button.btn-behaviour{
-  text-align: left;
+  margin-left: 4%
 }
 
 button.btn-centrado{
-    justify-content: center;
-    left: 40%;
+    margin-left: 35%;
 }
 
 p.textoError {
@@ -119,4 +118,15 @@ p.textoError {
 
 .label-cell {
   padding-left: 10px;
+}
+
+
+.leftForm { 
+  position: relative;
+  left: 4%
+}
+
+.rightForm { 
+  position: relative;
+  right: -14%
 }

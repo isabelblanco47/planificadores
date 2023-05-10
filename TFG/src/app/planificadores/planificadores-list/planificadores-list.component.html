@@ -100,18 +100,17 @@
 
                 <mat-divider></mat-divider><br>
 
-                <mat-form-field appearance="fill" class="col-5" style="color: #2c1435;">
+                <mat-form-field appearance="fill" class="col-5 leftForm " style="color: #2c1435;">
                     <mat-label>Start time</mat-label>
-                    <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." [(ngModel)]="start_time"
+                    <input matInput placeholder="Ej. 0, 1, 2..." [(ngModel)]="start_time"
                         name="start_time" #startTimeField>
                 </mat-form-field>
 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-                <mat-form-field appearance="fill" id="priority" class="col-5">
+                <mat-form-field appearance="fill" id="priority" class="col-5 rightForm">
                     <mat-label>Priority</mat-label>
-                    <input matInput [formControl]="control" placeholder="Ej. 4, 5, 6..." [(ngModel)]="priority"
+                    <input matInput placeholder="Ej. 4, 5, 6..." [(ngModel)]="priority"
                         name="priority" #priorityField>
                 </mat-form-field>
 
@@ -121,27 +120,19 @@
 
                 <h4 class="centered-title">Datos behaviour</h4><br>
 
-                <mat-form-field appearance="fill" id="type" class="col-5">
-                    <mat-label>Behaviour Type</mat-label>
-                    <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." type [(ngModel)]="type"
+                <mat-form-field appearance="fill" id="type" class="col-5 leftForm">
+                    <mat-label>Type</mat-label>
+                    <input matInput placeholder="Ej. 0, 1, 2..."  [(ngModel)]="type"
                         name="type" #typeField>
                 </mat-form-field>
 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                <mat-form-field appearance="fill" id="duration" class="col-5">
-                    <mat-label>Behaviour Duration</mat-label>
-                    <input matInput [formControl]="control" placeholder="Ej. 9, 10, 11..." [(ngModel)]="duration"
+                <mat-form-field appearance="fill" id="duration" class="col-5 rightForm">
+                    <mat-label>Duration</mat-label>
+                    <input matInput placeholder="Ej. 9, 10, 11..." [(ngModel)]="duration"
                         name="duration" #durationField>
                 </mat-form-field>
 
-                <br>
-                <mat-icon *ngIf="!control.valid && control.touched" style="color:red">error</mat-icon>
-                <span *ngIf="!control.valid && control.touched" style="color: red"> Debes rellenar todos
-                    los
-                    campos
-                    para
-                    crear la tarea. </span>
                 <br>
 
                 <button mat-raised-button
@@ -151,7 +142,7 @@
                     behaviour</button><br><br>
                 <mat-divider></mat-divider><br>
                 <button mat-raised-button
-                    [disabled]="!datosBehaviourGuardados || sinRellenar(start_time)|| sinRellenar(priority) || !control.valid"
+                    [disabled]="!datosBehaviourGuardados || sinRellenar(start_time)|| sinRellenar(priority)"
                     class="btn-centrado" color="primary" (click)="almacenarDatosTask()">Añadir tarea</button>
 
 
