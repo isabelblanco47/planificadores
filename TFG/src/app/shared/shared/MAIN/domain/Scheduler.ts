@@ -343,19 +343,19 @@ export class Scheduler {
 
             if (descriptor.tcb.state === TaskState.RUNNING) {
                 console.log("Task " + descriptor.tcb.command + " - State: running");
-                this.rows.push(descriptor.tcb.command + " running")
+                this.rows.push("Running")
             } else if (descriptor.tcb.state === TaskState.READY) {
                 console.log("Task " + descriptor.tcb.command + " - State: ready");
-                this.rows.push(descriptor.tcb.command + " ready");
+                this.rows.push("Ready");
             } else if (descriptor.tcb.state === TaskState.WAITING) {
                 console.log(descriptor.tcb.command + " - State: waiting");
-                this.rows.push("Task " + descriptor.tcb.command + " waiting");
+                this.rows.push("Waiting");
             } else if (descriptor.tcb.state === TaskState.TERMINATED) {
                 console.log("Task " + descriptor.tcb.command + " - State: terminated");
-                this.rows.push(descriptor.tcb.command + " terminated");
+                this.rows.push("Terminated");
             } else {
                 console.log("Task " + descriptor.tcb.command + " - State: inactive");
-                this.rows.push(descriptor.tcb.command + " inactive");
+                this.rows.push("Inactive");
             }
 
 
@@ -368,20 +368,20 @@ export class Scheduler {
 
         if (hard_disk_task !== null) {
             console.log("Hard disk task: " + hard_disk_task.command);
-            this.rows.push("HD task: " + hard_disk_task.command);
+            this.rows.push(hard_disk_task.command);
         } else {
             console.log("Hard disk task: none");
-            this.rows.push("HD task: none");
+            this.rows.push("None");
         }
 
         let keyboard_task = this.algorithm.getKeyboardTask();
 
         if (keyboard_task !== null) {
             console.log("Keyboard task: " + keyboard_task.command);
-            this.rows.push("Keyboard task: " + keyboard_task.command);
+            this.rows.push(keyboard_task.command);
         } else {
             console.log("Keyboard task: none");
-            this.rows.push("Keyboard task: none");
+            this.rows.push("None");
         }
 
 
