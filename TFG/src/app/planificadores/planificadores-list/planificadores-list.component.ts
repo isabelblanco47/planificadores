@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatCardTitleGroup } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
@@ -9,16 +9,16 @@ import { Scheduler } from 'src/app/shared/shared/MAIN/domain/Scheduler';
 import { TaskControlBlock } from 'src/app/shared/shared/MAIN/domain/TaskControlBlock';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
-  /**
-   * ANIMACION TABLA
-   */
-  export const tableAnimation = trigger('tableAnimation', [
-    transition(':enter', [
-      style({ opacity: 0 }),
-      animate('1s ease-out', style({ opacity: 1 })),
-    ]),
-  ]);
-  
+/**
+ * ANIMACION TABLA
+ */
+export const tableAnimation = trigger('tableAnimation', [
+  transition(':enter', [
+    style({ opacity: 0 }),
+    animate('1s ease-out', style({ opacity: 1 })),
+  ]),
+]);
+
 
 @Component({
   selector: 'app-planificadores-list',
@@ -28,13 +28,14 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class PlanificadoresListComponent {
 
+  @ViewChild('startTimeField') startTimeField: any;
+  @ViewChild('priorityField') priorityField: any;
+  @ViewChild('typeField') typeField: any;
+  @ViewChild('durationField') durationField: any;
+
   panelOpenState = false;
-  control: FormControl = new FormControl("", [Validators.required])
+
   numTareas = 0
-  start_time = "";
-  type = "";
-  duration = "";
-  priority = "";
   contador = 1
   labelInfo = ""
   tasks: any[] = []
@@ -47,6 +48,13 @@ export class PlanificadoresListComponent {
   rowsTabla: any[][] = [];
   dataSource: any[] = [];
   selectedFileName = "";
+  /* VARIABLES DE CONTROL FORMULARIO */
+  control: FormControl = new FormControl("", [Validators.required])
+  start_time = "";
+  type = "";
+  duration = "";
+  priority = "";
+  datosBehaviourGuardados = false;
 
   constructor(private router: Router, private _snackBar: MatSnackBar) {
 
@@ -80,6 +88,11 @@ export class PlanificadoresListComponent {
     this.openSnackBar(mensajePopUp, "")
     this.contador += 1
     this.labelInfo = "Información de la Tarea " + this.contador;
+    this.startTimeField.nativeElement.value = '';
+    this.priorityField.nativeElement.value = '';
+    this.typeField.nativeElement.value = '';
+    this.durationField.nativeElement.value = '';
+    this.datosBehaviourGuardados = false;
 
   }
 
@@ -89,6 +102,9 @@ export class PlanificadoresListComponent {
     if (this.type != null && this.duration != null) {
       let temp = { "type": this.type, "duration": this.duration }
       this.behaviourDict.push(temp)
+      this.typeField.nativeElement.value = '';
+      this.durationField.nativeElement.value = '';
+      this.datosBehaviourGuardados = true;
     }
     console.log("BEHAVIOUR", this.behaviourDict)
   }
@@ -210,6 +226,13 @@ export class PlanificadoresListComponent {
     console.log(" ----------------- ")
   }
 
+  /* CONTROL FORMULARIO */
+  sinRellenar(variable: string) {
+    return variable === ""
+  }
 
+  datosBehaviourCompletados() {
+    return this.type != "" && this.duration != ""
+  }
 
 }

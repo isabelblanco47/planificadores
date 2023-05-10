@@ -73,7 +73,7 @@
                 <mat-form-field appearance="fill" class="col-5" style="color: #2c1435;">
                     <mat-label>Start time</mat-label>
                     <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." [(ngModel)]="start_time"
-                        name="start_time">
+                        name="start_time"  #startTimeField>
                 </mat-form-field>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -82,7 +82,7 @@
                 <mat-form-field appearance="fill" id="priority" class="col-5">
                     <mat-label>Priority</mat-label>
                     <input matInput [formControl]="control" placeholder="Ej. 4, 5, 6..." [(ngModel)]="priority"
-                        name="priority">
+                        name="priority" #priorityField>
                 </mat-form-field>
 
                 <br><br>
@@ -94,7 +94,7 @@
                 <mat-form-field appearance="fill" id="type" class="col-5">
                     <mat-label>Behaviour Type</mat-label>
                     <input matInput [formControl]="control" placeholder="Ej. 0, 1, 2..." type [(ngModel)]="type"
-                        name="type">
+                        name="type"  #typeField>
                 </mat-form-field>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -102,7 +102,7 @@
                 <mat-form-field appearance="fill" id="duration" class="col-5">
                     <mat-label>Behaviour Duration</mat-label>
                     <input matInput [formControl]="control" placeholder="Ej. 9, 10, 11..." [(ngModel)]="duration"
-                        name="duration">
+                        name="duration" #durationField>
                 </mat-form-field>
 
                 <br>
@@ -114,11 +114,11 @@
                     crear la tarea. </span>
                 <br>
 
-                <button mat-raised-button class="btn-behaviour" (click)="almacenarDatosBehaviour()">Añadir
+                <button mat-raised-button [disabled]="!datosBehaviourCompletados() || sinRellenar(type)|| sinRellenar(duration)" class="btn-behaviour" (click)="almacenarDatosBehaviour()">Añadir
                     datos
                     behaviour</button><br><br>
                 <mat-divider></mat-divider><br>
-                <button mat-raised-button [disabled]="!control.valid" class="btn-centrado" color="primary"
+                <button mat-raised-button [disabled]="!datosBehaviourGuardados || sinRellenar(start_time)|| sinRellenar(priority) || !control.valid" class="btn-centrado" color="primary"
                     (click)="almacenarDatosTask()">Añadir tarea</button>
 
 
