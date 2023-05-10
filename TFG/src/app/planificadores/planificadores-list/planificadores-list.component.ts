@@ -68,11 +68,12 @@ export class PlanificadoresListComponent {
     let tarea = "T" + this.contador
     let temp = {
       "command": tarea,
-      "start_time": this.start_time,
-      "priority": this.priority,
+      "start_time": parseInt(this.start_time),
+      "priority": parseInt(this.priority),
       "behaviour": this.behaviourDict,
     }
     this.JSONdatos.tasks.push(temp)
+    this.behaviourDict = []
     //delete this.JSONdatos.task[0] // Se elemina el primer campo del diccionario por 
     console.log("CAMPOS JSON PRUEBA 2", this.JSONdatos)
     this.texto_JSONdatos = JSON.stringify(this.JSONdatos, null, 1) // JSON.stringify(this.JSONdatos).toString()
@@ -98,18 +99,13 @@ export class PlanificadoresListComponent {
   behaviourDict: any[] = []
   almacenarDatosBehaviour() {
     if (this.type != null && this.duration != null) {
-      let temp = { "type": this.type, "duration": this.duration }
+      let temp = { "type": parseInt(this.type), "duration": parseInt(this.duration) }
       this.behaviourDict.push(temp)
       this.typeField.nativeElement.value = '';
       this.durationField.nativeElement.value = '';
       this.type = "";
       this.duration = "";
-      this.start_time = this.start_time;
       this.datosBehaviourGuardados = true;
-      console.log("TYPE CONTENT", this.type)
-      console.log("DURATION CONTENT", this.duration)
-      console.log("Start CONTENT", this.start_time)
-      console.log("Prio CONTENT", this.priority)
     }
     console.log("BEHAVIOUR", this.behaviourDict)
   }
@@ -163,7 +159,7 @@ export class PlanificadoresListComponent {
     let scheduler = new Scheduler(algorithm);
 
 
-    if (this.texto_JSONdatos != undefined) {
+    if (this.JSONdatos != undefined) {
       console.warn("-------------------")
       console.warn(this.texto_JSONdatos, "JSON DATOS")
       const contenido = JSON.parse(this.texto_JSONdatos)

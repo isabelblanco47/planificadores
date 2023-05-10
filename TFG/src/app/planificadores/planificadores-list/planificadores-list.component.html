@@ -102,16 +102,15 @@
 
                 <mat-form-field appearance="fill" class="col-5 leftForm " style="color: #2c1435;">
                     <mat-label>Start time</mat-label>
-                    <input matInput placeholder="Ej. 0, 1, 2..." [(ngModel)]="start_time"
-                        name="start_time" #startTimeField>
+                    <input matInput placeholder="Ej. 0, 1, 2..." [(ngModel)]="start_time" name="start_time"
+                        #startTimeField>
                 </mat-form-field>
 
 
 
                 <mat-form-field appearance="fill" id="priority" class="col-5 rightForm">
                     <mat-label>Priority</mat-label>
-                    <input matInput placeholder="Ej. 4, 5, 6..." [(ngModel)]="priority"
-                        name="priority" #priorityField>
+                    <input matInput placeholder="Ej. 4, 5, 6..." [(ngModel)]="priority" name="priority" #priorityField>
                 </mat-form-field>
 
                 <br><br>
@@ -122,15 +121,14 @@
 
                 <mat-form-field appearance="fill" id="type" class="col-5 leftForm">
                     <mat-label>Type</mat-label>
-                    <input matInput placeholder="Ej. 0, 1, 2..."  [(ngModel)]="type"
-                        name="type" #typeField>
+                    <input matInput placeholder="Ej. 0, 1, 2..." [(ngModel)]="type" name="type" #typeField>
                 </mat-form-field>
 
 
                 <mat-form-field appearance="fill" id="duration" class="col-5 rightForm">
                     <mat-label>Duration</mat-label>
-                    <input matInput placeholder="Ej. 9, 10, 11..." [(ngModel)]="duration"
-                        name="duration" #durationField>
+                    <input matInput placeholder="Ej. 9, 10, 11..." [(ngModel)]="duration" name="duration"
+                        #durationField>
                 </mat-form-field>
 
                 <br>
@@ -200,8 +198,8 @@
                 Subida de archivo local
             </mat-grid-tile-header>
         </mat-grid-tile>
-        <mat-grid-tile>
-            <pre><p>{{texto_JSONdatos}}</p></pre>
+        <mat-grid-tile>           
+                <pre><p class="pretty-json">{{texto_JSONdatos}}</p></pre>
             <mat-grid-tile-header>
                 Datos cargados
             </mat-grid-tile-header>
