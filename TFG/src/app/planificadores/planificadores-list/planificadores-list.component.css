@@ -26,8 +26,7 @@ h4.centered-title {
     text-align: center;
 }
 button.btn-behaviour{
-    justify-content: flex-end;
-    left: 67%;
+  text-align: left;
 }
 
 button.btn-centrado{
