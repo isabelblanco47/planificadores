@@ -143,39 +143,7 @@
                     [disabled]="!datosBehaviourGuardados || sinRellenar(start_time)|| sinRellenar(priority)"
                     class="btn-centrado" color="primary" (click)="almacenarDatosTask()">Añadir tarea</button>
 
-
-
-
-                <!-- 
-                        <label for="infoTarea" id="infoTarea">{{labelInfo}}</label><br>
-        
-                        <label for="startTime">Start time</label><br>
-                        <input type="text" id="startTime" name="startTime"><br>
-        
-                        <label for="priority">Priority</label><br>
-                        <input type="text" id="priority" name="priority"><br><br>
-        
-                        <p>Behaviour de la tarea:</p>
-                        <label for="type">Type</label><br>
-                        <input type="text" id="type" name="type"><br>
-                        <label for="duration">Duration</label><br>
-                        <input type="text" id="duration" name="duration"><br>
-        
-                        <input id="clickMe1" type="button" value="Nuevo Dato Behaviour"
-                            (click)="almacenarDatosBehaviour()" /><br><br>
-        
-                        <input id="clickMe2" type="button" value="Almacenar Datos Tarea" (click)="almacenarDatosTask()" /><br>
-        -->
             </form>
-
-
-
-
-
-
-
-
-
 
 
             <mat-grid-tile-header>
@@ -206,16 +174,17 @@
         </mat-grid-tile>
     </mat-grid-list>
 
+    <br><button class ="btn-eliminar" mat-raised-button color="primary" (click)="eliminarDatos()">Eliminar datos cargados</button><br>
+
     <br>
     <mat-divider></mat-divider>
     <br>
     <div class="chips-div">
         <mat-chip-listbox aria-label="Scheduling selection">
-            <mat-chip-option color="dark" (click)="pulsadoFifo()">FIFO</mat-chip-option>
-            <mat-chip-option color="primary" (click)="pulsadoPriorityPreemtive()">Priority: Preemptive</mat-chip-option>
-            <mat-chip-option color="accent" (click)="pulsadoPriorityNonPreemptive()">Priority: Non Preemptive
-            </mat-chip-option>
-            <mat-chip-option color="warn" (click)="pulsadoRoundRobin()">Round-Robin</mat-chip-option>
+            <mat-chip-option color="dark"(click)="pulsadoFifo()" >FIFO</mat-chip-option>
+            <mat-chip-option color="primary" (click)="pulsadoPriorityPreemtive()" >Priority: Preemptive</mat-chip-option>
+            <mat-chip-option color="accent" (click)="pulsadoPriorityNonPreemptive()" >Priority: Non Preemptive</mat-chip-option>
+            <mat-chip-option color="warn" (click)="pulsadoRoundRobin()" >Round-Robin</mat-chip-option>
         </mat-chip-listbox>
     </div>
     <br>

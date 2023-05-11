@@ -8,6 +8,11 @@ import { Scheduler } from 'src/app/shared/shared/MAIN/domain/Scheduler';
 import { TaskControlBlock } from 'src/app/shared/shared/MAIN/domain/TaskControlBlock';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
+export interface ChipModel {
+  name: string;
+  selected: boolean;
+}
+
 /**
  * ANIMACION TABLA
  */
@@ -53,6 +58,8 @@ export class PlanificadoresListComponent {
   duration = "";
   priority = "";
   datosBehaviourGuardados = false;
+  /* MAT-CHIP COMPROBACIONES */
+  chipSeleccionado = ""
 
   constructor(private router: Router, private _snackBar: MatSnackBar) {
 
@@ -143,6 +150,9 @@ export class PlanificadoresListComponent {
         this.texto_JSONdatos = content
       } catch (error) {
         console.error('El archivo no es un JSON válido');
+        this.lectura_archivo = null;
+        this.texto_JSONdatos = '';
+        this.selectedFileName = ""
         this.openSnackBar("El archivo no es un JSON válido. Selecciona un archivo válido.", "")
       }
     };
@@ -153,7 +163,11 @@ export class PlanificadoresListComponent {
  */
 
   pulsadoFifo(): void {
-    this.generarTabla = true
+
+    if (this.generarTabla == true) {
+      this.generarTabla = false
+
+    }
 
     let algorithm = new FIFO();
     let scheduler = new Scheduler(algorithm);
@@ -164,7 +178,7 @@ export class PlanificadoresListComponent {
       console.warn(this.texto_JSONdatos, "JSON DATOS")
       const contenido = JSON.parse(this.texto_JSONdatos)
       console.warn(contenido, "JSON CONVERTIDO")
-      console.log(contenido.tasks)
+
       // Load the items into the scheduler
       for (let i = 0; i < contenido.tasks.length; i++) {
 
@@ -206,6 +220,8 @@ export class PlanificadoresListComponent {
       this.dataSource = this.rowsTabla;
     }
 
+    this.generarTabla = true
+
   }
 
 
@@ -234,6 +250,18 @@ export class PlanificadoresListComponent {
 
   datosBehaviourCompletados() {
     return this.type != "" && this.duration != ""
+  }
+
+  /* ELIMINAR DATOS */
+
+  eliminarDatos() {
+    this.lectura_archivo = null;
+    this.JSONdatos = { tasks: [] }
+    this.texto_JSONdatos = '';
+    this.contador = 1
+    this.labelInfo = "Información de la Tarea " + this.contador;
+    this.selectedFileName = ""
+
   }
 
 }

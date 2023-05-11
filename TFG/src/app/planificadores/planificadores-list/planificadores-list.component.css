@@ -31,6 +31,9 @@ button.btn-behaviour{
 button.btn-centrado{
     margin-left: 35%;
 }
+button.btn-eliminar{
+  margin-left: 43%
+}
 
 p.textoError {
     color: red;
