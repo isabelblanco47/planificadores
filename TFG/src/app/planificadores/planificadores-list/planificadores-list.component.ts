@@ -6,30 +6,14 @@ import { TaskDescriptor } from 'src/app/shared/shared/MAIN/domain/Descriptor';
 import { FIFO } from 'src/app/shared/shared/MAIN/domain/FIFO';
 import { Scheduler } from 'src/app/shared/shared/MAIN/domain/Scheduler';
 import { TaskControlBlock } from 'src/app/shared/shared/MAIN/domain/TaskControlBlock';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-
-export interface ChipModel {
-  name: string;
-  selected: boolean;
-}
-
-/**
- * ANIMACION TABLA
- */
-export const tableAnimation = trigger('tableAnimation', [
-  transition(':enter', [
-    style({ opacity: 0 }),
-    animate('1s ease-out', style({ opacity: 1 })),
-  ]),
-]);
 
 
 @Component({
   selector: 'app-planificadores-list',
   templateUrl: './planificadores-list.component.html',
   styleUrls: ['./planificadores-list.component.css'],
-  animations: [tableAnimation]
 })
+
 export class PlanificadoresListComponent {
 
   @ViewChild('startTimeField') startTimeField: any;

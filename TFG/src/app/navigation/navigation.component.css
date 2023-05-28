@@ -43,18 +43,6 @@ mat-sidenav-content {
   border-radius: 10px;
 }
 
-/*.a{
-  display:flex;
-}
-
-.a > mat-icon {
-  margin-left:10%;
-}
-
-.a > a {
-  margin-left: 7%;
-}*/
-
 mat-sidenav.mat-toolbar {
   background: inherit;
 }

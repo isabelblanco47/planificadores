@@ -218,7 +218,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="headersTabla"></tr>
-        <tr mat-row [@tableAnimation] *matRowDef="let row; columns: headersTabla;"></tr>
+        <tr mat-row *matRowDef="let row; columns: headersTabla;"></tr>
 
     </table>
 
