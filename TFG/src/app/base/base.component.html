@@ -76,34 +76,18 @@
           <mat-icon> border_color</mat-icon> Ejemplo de Planificación Prioritaria No Preventiva
         </h3>
         <mat-divider></mat-divider><br>
-        Supongamos que tenemos tres procesos, A, B y C, en una cola de procesos. El proceso A tiene una prioridad alta,
-        el
-        proceso B tiene una prioridad media y el proceso C tiene una prioridad baja. El tiempo de ejecución estimado
-        para
-        cada proceso es el siguiente:<br>
-
-        <ul>
-          <li><strong>Proceso A</strong>, que requiere 10 unidades de tiempo de CPU.
-          <li><strong>Proceso B</strong>, que requiere 8 unidades de tiempo de CPU.
-          <li><strong>Proceso C</strong>, que requiere 6 unidades de tiempo de CPU.
-        </ul>
-
-        El algoritmo de planificación prioritaria no preventiva ejecutará primero el proceso con la prioridad más alta.
-        Por lo tanto, el proceso A se ejecutará primero, ya que tiene la prioridad más alta. Una vez que el proceso A se
-        completa, el proceso B se ejecutará porque tiene la siguiente prioridad más alta. Finalmente, una vez que se
-        completa el proceso B, el proceso C se ejecutará.<br>
-
-        <br>El diagrama de Gantt para este ejemplo podría verse así:
+        Supongamos que tenemos cinco procesos en espera de ser ejecutados en la CPU, y llegan en el siguiente orden: <br>
         <br>
-        | A | B | C |<br>
-        0 10 18 24
+        <div style="display: flex; justify-content: center;">
+          <img src="./assets/nonPreemptiveTable.png" style="width: 40%;">
+        </div>
+
+        <br>El resultado de la ejecución de los procesos siguiendo el algoritmo será el siguiente: <br>
+
         <br>
-        <br>
-        En resumen, el algoritmo de planificación prioritaria no preventiva ejecuta los procesos en función de su
-        prioridad y permite que los procesos se ejecuten hasta que se completen o se bloqueen voluntariamente. Sin
-        embargo, los procesos de baja prioridad pueden experimentar inanición si hay muchos procesos de alta prioridad
-        en
-        la cola de procesos.
+        <div style="display: flex; justify-content: center;">
+          <img src="./assets/nonPreemptive.png" style="width: 40%;">
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="Algoritmo de Planificación Prioritaria: Preventiva">
@@ -156,6 +140,18 @@
           <mat-icon> border_color</mat-icon> Ejemplo de Planificación Prioritaria Preventiva
         </h3>
         <mat-divider></mat-divider><br>
+        Supongamos que tenemos cinco procesos en espera de ser ejecutados en la CPU, y llegan en el siguiente orden: <br>
+        <br>
+        <div style="display: flex; justify-content: center;">
+          <img src="./assets/preemptiveTable.png" style="width: 40%;">
+        </div>
+
+        <br>El resultado de la ejecución de los procesos siguiendo el algoritmo será el siguiente: <br>
+
+        <br>
+        <div style="display: flex; justify-content: center;">
+          <img src="./assets/preemptive.png" style="width: 50%;">
+        </div>
       </div>
     </mat-tab>
 
@@ -173,12 +169,14 @@
         intervalo de tiempo de hasta 1. <br>
         <br>Para implementar la planificación Round-Robin, tratamos de nuevo la cola de espera como una cola FIFO de
         procesos. Los nuevos procesos se añaden a la cola de la cola de procesos listos. <br>
-        <br>El planificador de la CPU elige el primer proceso de la cola de listos, establece un temporizador para que se
+        <br>El planificador de la CPU elige el primer proceso de la cola de listos, establece un temporizador para que
+        se
         interrumpa después de 1 unidad de tiempo, y despacha el proceso. Se podrán dar dos situaciones diferentes. El
         proceso puede tener una ráfaga de CPU de menos de 1 unidad de tiempo. En este caso, el propio proceso liberará
         la CPU voluntariamente. El planificador pasará al siguiente proceso de la cola de espera. Si la ráfaga de CPU
         del proceso actualmente en ejecución es superior a 1 unidad de tiempo, el temporizador se disparará y provocará
-        una interrupción al sistema operativo. Se ejecutará un cambio de contexto, y el proceso se colocará en la cola de
+        una interrupción al sistema operativo. Se ejecutará un cambio de contexto, y el proceso se colocará en la cola
+        de
         espera. El planificador de la CPU seleccionará entonces el siguiente proceso en la cola de espera.
 
       </div>
