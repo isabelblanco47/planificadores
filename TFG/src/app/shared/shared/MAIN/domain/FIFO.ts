@@ -42,6 +42,8 @@ export class FIFO implements SchedulingAlgorithm {
 
     running_task.state = TaskState.TERMINATED;
 
+    this.state.running_task = null;
+
     let next_task = this.ready_task_queue.dequeue();
 
     if (next_task !== undefined) {
@@ -70,6 +72,8 @@ export class FIFO implements SchedulingAlgorithm {
     }
 
     running_task.state = TaskState.WAITING;
+
+    this.state.running_task = null;
 
     if (this.getHardDiskTask() === null) {
       this.next_state.hard_disk_task = running_task;
@@ -133,6 +137,8 @@ export class FIFO implements SchedulingAlgorithm {
 
     running_task.state = TaskState.WAITING;
 
+    this.state.running_task = null;
+
     if (this.getKeyboardTask() === null) {
       this.next_state.keyboard_task = running_task;
     } else {
@@ -169,13 +175,13 @@ export class FIFO implements SchedulingAlgorithm {
 
     // Check if there was already a task in execution
 
-    if (this.getRunningTask() !== null) {
-      // If there was a task already running, put this one on ready
+    if (this.next_state.running_task !== null) {
+      // If there was a task already going to run, put this one on ready
       // state and append it to the end of the ready queue
       keyboard_task.state = TaskState.READY;
       this.ready_task_queue.enqueue(keyboard_task);
     } else {
-      // If there was no task previously running, set this one to running
+      // If there was no task previously going to run, set this one to running
       // state and dispatch it to the CPU
 
       this.next_state.running_task = keyboard_task;
