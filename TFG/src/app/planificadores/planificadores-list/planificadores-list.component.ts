@@ -1,9 +1,13 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, inject, ViewChild } from '@angular/core';
 import { MatCardTitleGroup } from '@angular/material/card';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TaskDescriptor } from 'src/app/shared/shared/MAIN/domain/Descriptor';
 import { FIFO } from 'src/app/shared/shared/MAIN/domain/FIFO';
+import { PriorityNonPreemptive } from 'src/app/shared/shared/MAIN/domain/PriorityNonPreemptive';
+import { PriorityPreemptive } from 'src/app/shared/shared/MAIN/domain/PriorityPreemptive';
+import { RoundRobin } from 'src/app/shared/shared/MAIN/domain/RoundRobin';
 import { Scheduler } from 'src/app/shared/shared/MAIN/domain/Scheduler';
 import { TaskControlBlock } from 'src/app/shared/shared/MAIN/domain/TaskControlBlock';
 
@@ -45,7 +49,7 @@ export class PlanificadoresListComponent {
   /* MAT-CHIP COMPROBACIONES */
   chipSeleccionado = ""
 
-  constructor(private router: Router, private _snackBar: MatSnackBar) {
+  constructor(private router: Router, private _snackBar: MatSnackBar,  private scroller: ViewportScroller) {
 
   }
 
@@ -148,20 +152,19 @@ export class PlanificadoresListComponent {
 
   pulsadoFifo(): void {
 
-    if (this.generarTabla == true) {
-      this.generarTabla = false
+    this.generarTabla = true
 
-    }
+    this.headersTabla = []
+    this.contenidoTabla = []
+    this.dataSource = []
+    this.rowsTabla = []
 
     let algorithm = new FIFO();
     let scheduler = new Scheduler(algorithm);
 
 
     if (this.JSONdatos != undefined) {
-      console.warn("-------------------")
-      console.warn(this.texto_JSONdatos, "JSON DATOS")
       const contenido = JSON.parse(this.texto_JSONdatos)
-      console.warn(contenido, "JSON CONVERTIDO")
 
       // Load the items into the scheduler
       for (let i = 0; i < contenido.tasks.length; i++) {
@@ -210,21 +213,172 @@ export class PlanificadoresListComponent {
 
 
   pulsadoPriorityNonPreemptive(): void {
-    console.log(" ----------------- ")
-    console.warn("Has seleccionado Priority Preemptive")
-    console.log(" ----------------- ")
+    this.generarTabla = true
+
+    this.headersTabla = []
+    this.contenidoTabla = []
+    this.dataSource = []
+    this.rowsTabla = []
+
+    let algorithm = new PriorityNonPreemptive();
+    let scheduler = new Scheduler(algorithm);
+
+
+
+    if (this.JSONdatos != undefined) {
+      const contenido = JSON.parse(this.texto_JSONdatos)
+      // Load the items into the scheduler
+      for (let i = 0; i < contenido.tasks.length; i++) {
+
+        // Allocate the TCB
+        let tcb = new TaskControlBlock(0,
+          contenido.tasks[i].command,
+          contenido.tasks[i].priority);
+
+        // Create the task descriptor attached to the TCB
+        let task = new TaskDescriptor(tcb, contenido.tasks[i].start_time);
+
+        // Load the behaviour into the task descriptor
+        for (let j = 0; j < contenido.tasks[i].behaviour.length; j++) {
+          task.appendBehavior(contenido.tasks[i].behaviour[j].type,
+            contenido.tasks[i].behaviour[j].duration);
+        }
+
+        scheduler.appendDescriptor(task);
+
+      }
+
+      // Let's go!
+      scheduler.run();
+      this.headersTabla = scheduler.headers
+      this.contenidoTabla = scheduler.rows
+      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
+
+      const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
+
+      for (let i = 0; i < numRows; i++) {
+        const row: any[] = [];
+        for (let j = 0; j < this.headersTabla.length; j++) {
+          const index = (i * this.headersTabla.length) + j;
+          row.push(this.contenidoTabla[index]);
+        }
+        this.rowsTabla.push(row);
+      }
+  
+      this.dataSource = this.rowsTabla;
+    }
   }
 
   pulsadoPriorityPreemtive(): void {
-    console.log(" ----------------- ")
-    console.warn("Has seleccionado Priority Non Preemptive")
-    console.log(" ----------------- ")
+    this.generarTabla = true
+
+    this.headersTabla = []
+    this.contenidoTabla = []
+    this.dataSource = []
+    this.rowsTabla = []
+
+    let algorithm = new PriorityPreemptive();
+    let scheduler = new Scheduler(algorithm);
+
+
+    if (this.JSONdatos != undefined) {
+      const contenido = JSON.parse(this.texto_JSONdatos)
+      // Load the items into the scheduler
+      for (let i = 0; i < contenido.tasks.length; i++) {
+
+        // Allocate the TCB
+        let tcb = new TaskControlBlock(0,
+          contenido.tasks[i].command,
+          contenido.tasks[i].priority);
+
+        // Create the task descriptor attached to the TCB
+        let task = new TaskDescriptor(tcb, contenido.tasks[i].start_time);
+
+        // Load the behaviour into the task descriptor
+        for (let j = 0; j < contenido.tasks[i].behaviour.length; j++) {
+          task.appendBehavior(contenido.tasks[i].behaviour[j].type,
+            contenido.tasks[i].behaviour[j].duration);
+        }
+
+        scheduler.appendDescriptor(task);
+
+      }
+
+      // Let's go!
+      scheduler.run();
+      this.headersTabla = scheduler.headers
+      this.contenidoTabla = scheduler.rows
+      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
+
+      const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
+
+      for (let i = 0; i < numRows; i++) {
+        const row: any[] = [];
+        for (let j = 0; j < this.headersTabla.length; j++) {
+          const index = (i * this.headersTabla.length) + j;
+          row.push(this.contenidoTabla[index]);
+        }
+        this.rowsTabla.push(row);
+      }
+  
+      this.dataSource = this.rowsTabla;
+    }
   }
 
   pulsadoRoundRobin(): void {
-    console.log(" ----------------- ")
-    console.warn("Has seleccionado Round Robin")
-    console.log(" ----------------- ")
+    this.generarTabla = true
+
+    this.headersTabla = []
+    this.contenidoTabla = []
+    this.dataSource = []
+    this.rowsTabla = []
+
+    let algorithm = new RoundRobin();
+    let scheduler = new Scheduler(algorithm);
+
+
+    if (this.JSONdatos != undefined) {
+      const contenido = JSON.parse(this.texto_JSONdatos)
+      // Load the items into the scheduler
+      for (let i = 0; i < contenido.tasks.length; i++) {
+
+        // Allocate the TCB
+        let tcb = new TaskControlBlock(0,
+          contenido.tasks[i].command,
+          contenido.tasks[i].priority);
+
+        // Create the task descriptor attached to the TCB
+        let task = new TaskDescriptor(tcb, contenido.tasks[i].start_time);
+
+        // Load the behaviour into the task descriptor
+        for (let j = 0; j < contenido.tasks[i].behaviour.length; j++) {
+          task.appendBehavior(contenido.tasks[i].behaviour[j].type,
+            contenido.tasks[i].behaviour[j].duration);
+        }
+
+        scheduler.appendDescriptor(task);
+
+      }
+
+      // Let's go!
+      scheduler.run();
+      this.headersTabla = scheduler.headers
+      this.contenidoTabla = scheduler.rows
+      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
+
+      const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
+
+      for (let i = 0; i < numRows; i++) {
+        const row: any[] = [];
+        for (let j = 0; j < this.headersTabla.length; j++) {
+          const index = (i * this.headersTabla.length) + j;
+          row.push(this.contenidoTabla[index]);
+        }
+        this.rowsTabla.push(row);
+      }
+  
+      this.dataSource = this.rowsTabla;
+    }
   }
 
   /* CONTROL FORMULARIO */
@@ -247,5 +401,13 @@ export class PlanificadoresListComponent {
     this.selectedFileName = ""
 
   }
+
+    /**
+   * TABLE SCROLL
+   */
+  goDown() {
+    this.scroller.scrollToAnchor("inicioTabla");
+  }
+
 
 }

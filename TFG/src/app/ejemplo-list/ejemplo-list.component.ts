@@ -21,6 +21,7 @@ export class EjemploListComponent {
   constructor(private router: Router, private scroller: ViewportScroller) {
 
   }
+  
   generarTabla = false
   infoQuantum = false
   headersTabla: any = []

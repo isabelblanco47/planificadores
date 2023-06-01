@@ -180,7 +180,7 @@
     <mat-divider></mat-divider>
     <br>
     <div class="chips-div">
-        <mat-chip-listbox aria-label="Scheduling selection">
+        <mat-chip-listbox (click)="goDown()" aria-label="Scheduling selection">
             <mat-chip-option color="dark"(click)="pulsadoFifo()" >FIFO</mat-chip-option>
             <mat-chip-option color="primary" (click)="pulsadoPriorityPreemtive()" >Priority: Preemptive</mat-chip-option>
             <mat-chip-option color="accent" (click)="pulsadoPriorityNonPreemptive()" >Priority: Non Preemptive</mat-chip-option>
@@ -192,7 +192,7 @@
     <br>
 
     <!-- LEYENDA DE COLORES-->
-    <table *ngIf="generarTabla" class="legend">
+    <table id= "inicioTabla" *ngIf="generarTabla" class="legend">
         <tr>
             <td class="color-cell red"></td>
             <td class="label-cell">Terminated</td>
@@ -204,6 +204,14 @@
         <tr>
             <td class="color-cell yellow"></td>
             <td class="label-cell">Ready</td>
+        </tr>
+        <tr>
+            <td class="color-cell blue"></td>
+            <td class="label-cell">Waiting</td>
+        </tr>
+        <tr>
+            <td class="color-cell black"></td>
+            <td class="label-cell">Inactive</td>
         </tr>
     </table>
 
