@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ViewportScroller } from "@angular/common";
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
 import { FIFO } from '../shared/shared/MAIN/domain/FIFO';
@@ -17,17 +18,16 @@ import { RoundRobin } from '../shared/shared/MAIN/domain/RoundRobin';
 })
 export class EjemploListComponent {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private scroller: ViewportScroller) {
 
   }
-  generarTablaFIFO = false
-  generarTablaNonPreemptive = false
-  generarTablaPreemptive = false
-  generarTablaRoundRobin = false
+  generarTabla = false
+  infoQuantum = false
   headersTabla: any = []
   contenidoTabla: any = []
   rowsTabla: any[][] = [];
   dataSource: any[] = [];
+
 
   /** DECLARACIÓN DE LOS JSON DE EJEMPLO **/
   sample_cpu_json = {
@@ -142,10 +142,9 @@ export class EjemploListComponent {
 
 
   pulsadoFifo(): void {
-    this.generarTablaFIFO = true
-    this.generarTablaPreemptive = false
-    this.generarTablaNonPreemptive = false
-    this.generarTablaRoundRobin = false
+    this.generarTabla = true
+    this.infoQuantum = true
+
     this.headersTabla = []
     this.contenidoTabla = []
     this.dataSource = []
@@ -201,11 +200,8 @@ export class EjemploListComponent {
   }
 
   pulsadoPriorityNonPreemptive(): void {
-
-    this.generarTablaNonPreemptive = true
-    this.generarTablaPreemptive = false
-    this.generarTablaFIFO = false
-    this.generarTablaRoundRobin = false
+    this.generarTabla = true
+    this.infoQuantum = false
 
     this.headersTabla = []
     this.contenidoTabla = []
@@ -262,10 +258,8 @@ export class EjemploListComponent {
   }
 
   pulsadoPriorityPreemtive(): void {
-    this.generarTablaPreemptive = true
-    this.generarTablaFIFO = false
-    this.generarTablaNonPreemptive = false
-    this.generarTablaRoundRobin = false
+    this.generarTabla = true
+    this.infoQuantum = false
 
     this.headersTabla = []
     this.contenidoTabla = []
@@ -322,10 +316,8 @@ export class EjemploListComponent {
   }
 
   pulsadoRoundRobin(): void {
-    this.generarTablaRoundRobin = true
-    this.generarTablaPreemptive = false
-    this.generarTablaFIFO = false
-    this.generarTablaNonPreemptive = false
+    this.generarTabla = true
+    this.infoQuantum = true
 
     this.headersTabla = []
     this.contenidoTabla = []
@@ -383,8 +375,11 @@ export class EjemploListComponent {
 
 
   /**
-   * GENERACION DE TABLAS DEL PLANIFICADOR
+   * TABLE SCROLL
    */
+  goDown() {
+    this.scroller.scrollToAnchor("inicioTabla");
+  }
 
 
 }
