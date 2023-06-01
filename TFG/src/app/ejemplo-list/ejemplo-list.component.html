@@ -167,35 +167,83 @@
     </div>
     <br>
     <mat-divider></mat-divider>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <br><br><br><br><br><br>
 
     <!-- LEYENDA DE COLORES-->
-    <table *ngIf="generarTabla" class="legend">
+    <table *ngIf="generarTablaFIFO || generarTablaRoundRobin || generarTablaPreemptive || generarTablaNonPreemptive" class="legend">
         <tr>
-          <td class="color-cell red"></td>
-          <td class="label-cell">Terminated</td>
+            <td class="color-cell red"></td>
+            <td class="label-cell">Terminated</td>
         </tr>
         <tr>
-          <td class="color-cell green"></td>
-          <td class="label-cell">Running</td>
+            <td class="color-cell green"></td>
+            <td class="label-cell">Running</td>
         </tr>
         <tr>
-          <td class="color-cell yellow"></td>
-          <td class="label-cell">Ready</td>
+            <td class="color-cell yellow"></td>
+            <td class="label-cell">Ready</td>
         </tr>
-      </table>
- 
+        <tr>
+            <td class="color-cell blue"></td>
+            <td class="label-cell">Waiting</td>
+        </tr>
+        <tr>
+            <td class="color-cell black"></td>
+            <td class="label-cell">Inactive</td>
+        </tr>
 
-    <table mat-table *ngIf="generarTabla" [dataSource]="dataSource" class="mat-elevation-z8">
+    </table>
+
+
+    <table mat-table *ngIf="generarTablaFIFO" [dataSource]="dataSource" class="tabla-planificador">
 
         <ng-container *ngFor="let header of headersTabla; let i = index" [matColumnDef]="header">
             <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
-            <td mat-cell *matCellDef="let element" [ngStyle]="{ color: (element[i] === 'Running') ? 'green' : (element[i] === 'Ready') ? 'yellow' : (element[i] === 'Terminated') ? 'red' : 'white' }">{{ element[i] }}</td>
+            <td mat-cell *matCellDef="let element"
+                [ngStyle]="{ color: (element[i] === 'Running') ?'green' : (element[i] === 'Ready') ? 'yellow' :  (element[i] === 'Terminated') ? 'red' : (element[i] === 'Waiting') ? 'blue' : (element[i] === 'Inactive') ? 'black' : 'white' }">
+                {{ element[i] }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="headersTabla"></tr>
+        <tr mat-row *matRowDef="let row; columns: headersTabla;"></tr>
+
+    </table>
+
+    <table mat-table *ngIf="generarTablaRoundRobin" [dataSource]="dataSource" class="tabla-planificador">
+
+        <ng-container *ngFor="let header of headersTabla; let i = index" [matColumnDef]="header">
+            <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
+            <td mat-cell *matCellDef="let element"
+                [ngStyle]="{ color: (element[i] === 'Running') ?'green' : (element[i] === 'Ready') ? 'yellow' :  (element[i] === 'Terminated') ? 'red' : (element[i] === 'Waiting') ? 'blue' : (element[i] === 'Inactive') ? 'black' : 'white' }">
+                {{ element[i] }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="headersTabla"></tr>
+        <tr mat-row *matRowDef="let row; columns: headersTabla;"></tr>
+
+    </table>
+
+    <table mat-table *ngIf="generarTablaPreemptive" [dataSource]="dataSource" class="tabla-planificador">
+
+        <ng-container *ngFor="let header of headersTabla; let i = index" [matColumnDef]="header">
+            <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
+            <td mat-cell *matCellDef="let element"
+                [ngStyle]="{ color: (element[i] === 'Running') ?'green' : (element[i] === 'Ready') ? 'yellow' :  (element[i] === 'Terminated') ? 'red' : (element[i] === 'Waiting') ? 'blue' : (element[i] === 'Inactive') ? 'black' : 'white' }">
+                {{ element[i] }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="headersTabla"></tr>
+        <tr mat-row *matRowDef="let row; columns: headersTabla;"></tr>
+
+    </table>
+
+    <table mat-table *ngIf="generarTablaNonPreemptive" [dataSource]="dataSource" class="tabla-planificador">
+
+        <ng-container *ngFor="let header of headersTabla; let i = index" [matColumnDef]="header">
+            <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
+            <td mat-cell *matCellDef="let element"
+                [ngStyle]="{ color: (element[i] === 'Running') ?'green' : (element[i] === 'Ready') ? 'yellow' :  (element[i] === 'Terminated') ? 'red' : (element[i] === 'Waiting') ? 'blue' : (element[i] === 'Inactive') ? 'black' : 'white' }">
+                {{ element[i] }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="headersTabla"></tr>

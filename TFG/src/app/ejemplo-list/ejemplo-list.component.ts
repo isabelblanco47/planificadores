@@ -20,7 +20,10 @@ export class EjemploListComponent {
   constructor(private router: Router) {
 
   }
-  generarTabla = false
+  generarTablaFIFO = false
+  generarTablaNonPreemptive = false
+  generarTablaPreemptive = false
+  generarTablaRoundRobin = false
   headersTabla: any = []
   contenidoTabla: any = []
   rowsTabla: any[][] = [];
@@ -139,7 +142,14 @@ export class EjemploListComponent {
 
 
   pulsadoFifo(): void {
-    this.generarTabla = true
+    this.generarTablaFIFO = true
+    this.generarTablaPreemptive = false
+    this.generarTablaNonPreemptive = false
+    this.generarTablaRoundRobin = false
+    this.headersTabla = []
+    this.contenidoTabla = []
+    this.dataSource = []
+    this.rowsTabla = []
 
     let algorithm = new FIFO();
     let scheduler = new Scheduler(algorithm);
@@ -192,7 +202,15 @@ export class EjemploListComponent {
 
   pulsadoPriorityNonPreemptive(): void {
 
-    this.generarTabla = true
+    this.generarTablaNonPreemptive = true
+    this.generarTablaPreemptive = false
+    this.generarTablaFIFO = false
+    this.generarTablaRoundRobin = false
+
+    this.headersTabla = []
+    this.contenidoTabla = []
+    this.dataSource = []
+    this.rowsTabla = []
 
     let algorithm = new PriorityNonPreemptive();
     let scheduler = new Scheduler(algorithm);
@@ -244,7 +262,15 @@ export class EjemploListComponent {
   }
 
   pulsadoPriorityPreemtive(): void {
-    this.generarTabla = true
+    this.generarTablaPreemptive = true
+    this.generarTablaFIFO = false
+    this.generarTablaNonPreemptive = false
+    this.generarTablaRoundRobin = false
+
+    this.headersTabla = []
+    this.contenidoTabla = []
+    this.dataSource = []
+    this.rowsTabla = []
 
     let algorithm = new PriorityPreemptive();
     let scheduler = new Scheduler(algorithm);
@@ -296,7 +322,15 @@ export class EjemploListComponent {
   }
 
   pulsadoRoundRobin(): void {
-    this.generarTabla = true
+    this.generarTablaRoundRobin = true
+    this.generarTablaPreemptive = false
+    this.generarTablaFIFO = false
+    this.generarTablaNonPreemptive = false
+
+    this.headersTabla = []
+    this.contenidoTabla = []
+    this.dataSource = []
+    this.rowsTabla = []
 
     let algorithm = new RoundRobin();
     let scheduler = new Scheduler(algorithm);
