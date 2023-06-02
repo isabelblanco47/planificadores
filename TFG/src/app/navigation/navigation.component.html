@@ -10,7 +10,7 @@
   <mat-sidenav #drawer mode="side" closed role="navigation">
     <mat-nav-list>
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink='/base'>
+      <a mat-list-item routerLink='/base' (click)="drawer.close()">
         <mat-icon>home</mat-icon>Inicio
       </a>
       <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
@@ -18,10 +18,10 @@
           <mat-icon>scatter_plot</mat-icon>Planificadores
         </mat-expansion-panel-header>
         <mat-nav-list dense>
-          <a mat-list-item routerLink="/planificadores">
+          <a mat-list-item routerLink="/planificadores" (click)="drawer.close()">
             <mat-icon>poll</mat-icon>Simulador 
           </a>
-          <a mat-list-item routerLink="/ejemplo">
+          <a mat-list-item routerLink="/ejemplo" (click)="drawer.close()">
             <mat-icon>image_aspect_ratio</mat-icon>Ejemplos
           </a>
         </mat-nav-list>
