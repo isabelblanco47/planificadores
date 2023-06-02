@@ -15,7 +15,7 @@ export class RoundRobin implements SchedulingAlgorithm {
   private timeslice : number = 0;
 
   // Constructor. It takes the timeslice as a parameter.
-  constructor(timeslice : number = 2) {
+  constructor(timeslice : number) {
     this.timeslice = timeslice;
   }
 

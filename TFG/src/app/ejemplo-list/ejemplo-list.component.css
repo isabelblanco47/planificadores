@@ -83,23 +83,23 @@
 }
 
 .red {
-  background-color: red;
+  background-color: #E74C3C;
 }
 
 .green {
-  background-color: green;
+  background-color: #27AE60;
 }
 
 .yellow {
-  background-color:yellow;
+  background-color:#F1C40F;
 }
 
 .black {
-  background-color:black;
+  background-color:#17202A;
 }
 
-.blue {
-  background-color:blue;
+.pink {
+  background-color:#F5CBA7;
 }
 
 .label-cell {

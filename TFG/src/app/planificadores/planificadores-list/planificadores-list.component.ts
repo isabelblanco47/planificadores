@@ -27,6 +27,8 @@ export class PlanificadoresListComponent {
 
   panelOpenState = false;
 
+  time_slice: number = 2;
+  mostrarCampo = false
   numTareas = 0
   contador = 1
   labelInfo = ""
@@ -153,6 +155,7 @@ export class PlanificadoresListComponent {
   pulsadoFifo(): void {
 
     this.generarTabla = true
+    this.mostrarCampo = false
 
     this.headersTabla = []
     this.contenidoTabla = []
@@ -214,6 +217,7 @@ export class PlanificadoresListComponent {
 
   pulsadoPriorityNonPreemptive(): void {
     this.generarTabla = true
+    this.mostrarCampo = false
 
     this.headersTabla = []
     this.contenidoTabla = []
@@ -271,6 +275,7 @@ export class PlanificadoresListComponent {
 
   pulsadoPriorityPreemtive(): void {
     this.generarTabla = true
+    this.mostrarCampo = false
 
     this.headersTabla = []
     this.contenidoTabla = []
@@ -325,6 +330,17 @@ export class PlanificadoresListComponent {
     }
   }
 
+  mostrarCampoRR () {
+    this.mostrarCampo = true
+  }
+
+  handleNumberChange() {
+    // Lógica que se ejecutará cuando el valor cambie
+    console.log('Se ha ingresado un nuevo número:', this.time_slice);
+    // Se llama a la funcion cuando el usuario ha escrito un valor en TimeSlice.
+    this.pulsadoRoundRobin();
+  }
+
   pulsadoRoundRobin(): void {
     this.generarTabla = true
 
@@ -333,7 +349,9 @@ export class PlanificadoresListComponent {
     this.dataSource = []
     this.rowsTabla = []
 
-    let algorithm = new RoundRobin();
+    // TODO: Pedir timeslice al usuario y pasar al crear elemento algorithm
+
+    let algorithm = new RoundRobin(this.time_slice);
     let scheduler = new Scheduler(algorithm);
 
 
@@ -408,6 +426,8 @@ export class PlanificadoresListComponent {
   goDown() {
     this.scroller.scrollToAnchor("inicioTabla");
   }
+
+
 
 
 }

@@ -144,7 +144,7 @@ export class EjemploListComponent {
 
   pulsadoFifo(): void {
     this.generarTabla = true
-    this.infoQuantum = true
+    this.infoQuantum = false
 
     this.headersTabla = []
     this.contenidoTabla = []
@@ -325,7 +325,7 @@ export class EjemploListComponent {
     this.dataSource = []
     this.rowsTabla = []
 
-    let algorithm = new RoundRobin();
+    let algorithm = new RoundRobin(2);
     let scheduler = new Scheduler(algorithm);
 
 

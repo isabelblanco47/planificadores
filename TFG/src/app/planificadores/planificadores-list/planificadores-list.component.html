@@ -83,6 +83,7 @@
             <br><br>El <strong>segundo paso</strong> es seleccionar el planificador que queremos que ejecute la
             planificación de entre las opciones mostradas. Se mostrará una tabla con los resultados por cada tiempo de
             reloj.
+            <p style="color:#5678ef"><strong>Información relevante: Si seleccionamos Round-Robin tendremos que especificar el valor del Time Slice. La ejecución se recargará si cambiamos el valor.</strong></p>
 
         </mat-expansion-panel>
     </mat-accordion>
@@ -184,12 +185,20 @@
             <mat-chip-option color="dark"(click)="pulsadoFifo()" >FIFO</mat-chip-option>
             <mat-chip-option color="primary" (click)="pulsadoPriorityPreemtive()" >Priority: Preemptive</mat-chip-option>
             <mat-chip-option color="accent" (click)="pulsadoPriorityNonPreemptive()" >Priority: Non Preemptive</mat-chip-option>
-            <mat-chip-option color="warn" (click)="pulsadoRoundRobin()" >Round-Robin</mat-chip-option>
+            <mat-chip-option color="warn" (click)="mostrarCampoRR()">Round-Robin</mat-chip-option>
         </mat-chip-listbox>
     </div>
     <br>
     <mat-divider></mat-divider>
     <br>
+
+    <div *ngIf="mostrarCampo" class="time-slice-field-container">
+        <mat-form-field appearance="fill" class="time-slice-field" (click)="goDown()">
+          <mat-label>Time Slice</mat-label>
+          <input matInput type="number" placeholder="1, 2, 3..." [(ngModel)]="time_slice" (ngModelChange)="handleNumberChange()">
+        </mat-form-field>
+      </div>
+
 
     <!-- LEYENDA DE COLORES-->
     <table id= "inicioTabla" *ngIf="generarTabla" class="legend">
@@ -206,7 +215,7 @@
             <td class="label-cell">Ready</td>
         </tr>
         <tr>
-            <td class="color-cell blue"></td>
+            <td class="color-cell pink"></td>
             <td class="label-cell">Waiting</td>
         </tr>
         <tr>
@@ -221,8 +230,8 @@
         <ng-container *ngFor="let header of headersTabla; let i = index" [matColumnDef]="header">
             <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
             <td mat-cell *matCellDef="let element"
-                [ngStyle]="{ color: (element[i] === 'Running') ?'green' : (element[i] === 'Ready') ? 'yellow' :  (element[i] === 'Terminated') ? 'red' : (element[i] === 'Waiting') ? 'blue' : (element[i] === 'Inactive') ? 'black' : 'white' }">
-                {{ element[i] }}</td>
+            [ngStyle]="{ color: (element[i] === 'Running') ?'#27AE60' : (element[i] === 'Ready') ? '#F1C40F' :  (element[i] === 'Terminated') ? '#E74C3C' : (element[i] === 'Waiting') ? '#F5CBA7' : (element[i] === 'Inactive') ? '#17202A' : 'white' }">
+            {{ element[i] }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="headersTabla"></tr>
