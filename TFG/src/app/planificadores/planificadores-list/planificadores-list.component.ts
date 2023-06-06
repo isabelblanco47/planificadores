@@ -41,6 +41,9 @@ export class PlanificadoresListComponent {
   contenidoTabla: any = []
   rowsTabla: any[][] = [];
   dataSource: any[] = [];
+  headersTabla2: any = []
+  rowsTabla2: any[][] = [];
+  dataSource2: any[] = [];
   selectedFileName = "";
   /* VARIABLES DE CONTROL FORMULARIO */
   start_time = "";
@@ -51,7 +54,7 @@ export class PlanificadoresListComponent {
   /* MAT-CHIP COMPROBACIONES */
   chipSeleccionado = ""
 
-  constructor(private router: Router, private _snackBar: MatSnackBar,  private scroller: ViewportScroller) {
+  constructor(private router: Router, private _snackBar: MatSnackBar, private scroller: ViewportScroller) {
 
   }
 
@@ -161,6 +164,9 @@ export class PlanificadoresListComponent {
     this.contenidoTabla = []
     this.dataSource = []
     this.rowsTabla = []
+    this.headersTabla2 = []
+    this.dataSource2 = []
+    this.rowsTabla2 = []
 
     let algorithm = new FIFO();
     let scheduler = new Scheduler(algorithm);
@@ -194,6 +200,8 @@ export class PlanificadoresListComponent {
       scheduler.run();
       this.headersTabla = scheduler.headers
       this.contenidoTabla = scheduler.rows
+      this.headersTabla2 = scheduler.headers2
+      this.rowsTabla2 = scheduler.rows2
       //this.dataSource = new MatTableDataSource(this.contenidoTabla);
 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
@@ -208,9 +216,8 @@ export class PlanificadoresListComponent {
       }
 
       this.dataSource = this.rowsTabla;
+      this.dataSource2 = this.rowsTabla2;
     }
-
-    this.generarTabla = true
 
   }
 
@@ -223,6 +230,9 @@ export class PlanificadoresListComponent {
     this.contenidoTabla = []
     this.dataSource = []
     this.rowsTabla = []
+    this.headersTabla2 = []
+    this.dataSource2 = []
+    this.rowsTabla2 = []
 
     let algorithm = new PriorityNonPreemptive();
     let scheduler = new Scheduler(algorithm);
@@ -256,6 +266,8 @@ export class PlanificadoresListComponent {
       scheduler.run();
       this.headersTabla = scheduler.headers
       this.contenidoTabla = scheduler.rows
+      this.headersTabla2 = scheduler.headers2
+      this.rowsTabla2 = scheduler.rows2
       //this.dataSource = new MatTableDataSource(this.contenidoTabla);
 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
@@ -268,8 +280,9 @@ export class PlanificadoresListComponent {
         }
         this.rowsTabla.push(row);
       }
-  
+
       this.dataSource = this.rowsTabla;
+      this.dataSource2 = this.rowsTabla2;
     }
   }
 
@@ -281,6 +294,9 @@ export class PlanificadoresListComponent {
     this.contenidoTabla = []
     this.dataSource = []
     this.rowsTabla = []
+    this.headersTabla2 = []
+    this.dataSource2 = []
+    this.rowsTabla2 = []
 
     let algorithm = new PriorityPreemptive();
     let scheduler = new Scheduler(algorithm);
@@ -313,6 +329,8 @@ export class PlanificadoresListComponent {
       scheduler.run();
       this.headersTabla = scheduler.headers
       this.contenidoTabla = scheduler.rows
+      this.headersTabla2 = scheduler.headers2
+      this.rowsTabla2 = scheduler.rows2
       //this.dataSource = new MatTableDataSource(this.contenidoTabla);
 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
@@ -325,12 +343,13 @@ export class PlanificadoresListComponent {
         }
         this.rowsTabla.push(row);
       }
-  
+
       this.dataSource = this.rowsTabla;
+      this.dataSource2 = this.rowsTabla2;
     }
   }
 
-  mostrarCampoRR () {
+  mostrarCampoRR() {
     this.mostrarCampo = true
   }
 
@@ -348,6 +367,9 @@ export class PlanificadoresListComponent {
     this.contenidoTabla = []
     this.dataSource = []
     this.rowsTabla = []
+    this.headersTabla2 = []
+    this.dataSource2 = []
+    this.rowsTabla2 = []
 
     // TODO: Pedir timeslice al usuario y pasar al crear elemento algorithm
 
@@ -382,6 +404,8 @@ export class PlanificadoresListComponent {
       scheduler.run();
       this.headersTabla = scheduler.headers
       this.contenidoTabla = scheduler.rows
+      this.headersTabla2 = scheduler.headers2
+      this.rowsTabla2 = scheduler.rows2
       //this.dataSource = new MatTableDataSource(this.contenidoTabla);
 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
@@ -394,8 +418,9 @@ export class PlanificadoresListComponent {
         }
         this.rowsTabla.push(row);
       }
-  
+
       this.dataSource = this.rowsTabla;
+      this.dataSource2 = this.rowsTabla2;
     }
   }
 
@@ -420,14 +445,26 @@ export class PlanificadoresListComponent {
 
   }
 
-    /**
-   * TABLE SCROLL
-   */
+  /**
+ * TABLE SCROLL
+ */
   goDown() {
     this.scroller.scrollToAnchor("inicioTabla");
   }
 
-
+  getStyle(element: string): any {
+    if (element == '0') {
+      return { backgroundColor: 'black', color: 'black' };
+    } else if (element == '1') {
+      return { backgroundColor: '#F1C40F', color: '#F1C40F' };
+    } else if (element == '2') {
+      return { backgroundColor: '#27AE60', color: '#27AE60' };
+    } else if (element == '3') {
+      return { backgroundColor: '#F5CBA7', color: '#F5CBA7' };
+    } else if (element == '4') {
+      return { backgroundColor: '#E74C3C', color: '#E74C3C' };
+    }
+  }
 
 
 }

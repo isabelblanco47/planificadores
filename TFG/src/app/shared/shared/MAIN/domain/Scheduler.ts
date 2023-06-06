@@ -121,6 +121,9 @@ export class Scheduler {
     tasksAdded: boolean = false
     otherTasksAdded: boolean = false
 
+    // List of headers and row content of the status: needed to create the second table
+    headers2: string[] = [];
+    rows2: any[][] = [];
 
     constructor(algorithm: SchedulingAlgorithm) {
 
@@ -314,6 +317,16 @@ export class Scheduler {
 
         console.log("Clock t = " + this.clock);
         this.rows.push(this.clock)
+        
+        if (!this.headersAdded) {
+            this.headers2 = ["Task"]
+            for (let i = 0; i < this.task_descriptors.length; i++) {
+                    this.headers.push("Task " + (i + 1))
+                    this.rows2.push(["Task "+ (i + 1)])
+
+                }
+        }
+        this.headers2.push(this.clock.toString())
 
         for (let descriptor of this.task_descriptors) {
 
@@ -323,6 +336,7 @@ export class Scheduler {
 
             if (!this.headersAdded) {
                 this.headers = ["Clock time"]
+                
 
                 for (let i = 0; i < this.task_descriptors.length; i++) {
                     this.headers.push("Task " + (i + 1))
@@ -332,6 +346,12 @@ export class Scheduler {
                 this.headers.push("Keyboard Task")
                 this.headersAdded = true
             }
+            console.log("descriptor tcb command", descriptor.tcb.command)
+            const soloDigitos = descriptor.tcb.command.match(/\d+/)?.[0] || "";
+            console.log("descriptor tcb command after", soloDigitos)
+            this.rows2[parseInt(soloDigitos)-1].push(descriptor.tcb.state)
+
+            
 
 
             // Print "Task <task_id> - <state>". State will be one of
@@ -357,9 +377,6 @@ export class Scheduler {
                 console.log("Task " + descriptor.tcb.command + " - State: inactive");
                 this.rows.push("Inactive");
             }
-
-
-
 
 
         }

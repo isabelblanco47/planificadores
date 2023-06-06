@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ɵConsole } from '@angular/core';
 import { ViewportScroller } from "@angular/common";
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
@@ -6,7 +6,6 @@ import { FIFO } from '../shared/shared/MAIN/domain/FIFO';
 import { Scheduler } from '../shared/shared/MAIN/domain/Scheduler';
 import { TaskDescriptor } from '../shared/shared/MAIN/domain/Descriptor';
 import { TaskControlBlock } from '../shared/shared/MAIN/domain/TaskControlBlock';
-import { MatTableDataSource } from '@angular/material/table';
 import { PriorityNonPreemptive } from '../shared/shared/MAIN/domain/PriorityNonPreemptive';
 import { PriorityPreemptive } from '../shared/shared/MAIN/domain/PriorityPreemptive';
 import { RoundRobin } from '../shared/shared/MAIN/domain/RoundRobin';
@@ -21,14 +20,16 @@ export class EjemploListComponent {
   constructor(private router: Router, private scroller: ViewportScroller) {
 
   }
-  
+
   generarTabla = false
   infoQuantum = false
   headersTabla: any = []
   contenidoTabla: any = []
   rowsTabla: any[][] = [];
   dataSource: any[] = [];
-
+  headersTabla2: any = []
+  rowsTabla2: any[][] = [];
+  dataSource2: any[] = [];
 
   /** DECLARACIÓN DE LOS JSON DE EJEMPLO **/
   sample_cpu_json = {
@@ -150,6 +151,9 @@ export class EjemploListComponent {
     this.contenidoTabla = []
     this.dataSource = []
     this.rowsTabla = []
+    this.headersTabla2 = []
+    this.dataSource2 = []
+    this.rowsTabla2 = []
 
     let algorithm = new FIFO();
     let scheduler = new Scheduler(algorithm);
@@ -182,6 +186,20 @@ export class EjemploListComponent {
       scheduler.run();
       this.headersTabla = scheduler.headers
       this.contenidoTabla = scheduler.rows
+      this.headersTabla2 = scheduler.headers2
+      this.rowsTabla2 = scheduler.rows2
+
+
+      // Imprimir tabla invertida
+
+      console.log("------TABLA 1 DATA------")
+      console.log("headers:::", this.headersTabla)
+      console.log("contenido:::", this.rowsTabla)
+      console.log()
+      console.log("------TABLA 2 DATA------")
+      console.log("headers:::", this.headersTabla2)
+      console.log("contenido:::", this.rowsTabla2)
+
       //this.dataSource = new MatTableDataSource(this.contenidoTabla);
 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
@@ -194,8 +212,9 @@ export class EjemploListComponent {
         }
         this.rowsTabla.push(row);
       }
-  
+
       this.dataSource = this.rowsTabla;
+      this.dataSource2 = this.rowsTabla2;
     }
 
   }
@@ -208,6 +227,9 @@ export class EjemploListComponent {
     this.contenidoTabla = []
     this.dataSource = []
     this.rowsTabla = []
+    this.headersTabla2 = []
+    this.dataSource2 = []
+    this.rowsTabla2 = []
 
     let algorithm = new PriorityNonPreemptive();
     let scheduler = new Scheduler(algorithm);
@@ -240,7 +262,8 @@ export class EjemploListComponent {
       scheduler.run();
       this.headersTabla = scheduler.headers
       this.contenidoTabla = scheduler.rows
-      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
+      this.headersTabla2 = scheduler.headers2
+      this.rowsTabla2 = scheduler.rows2
 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
 
@@ -252,8 +275,9 @@ export class EjemploListComponent {
         }
         this.rowsTabla.push(row);
       }
-  
+
       this.dataSource = this.rowsTabla;
+      this.dataSource2 = this.rowsTabla2;
     }
 
   }
@@ -266,6 +290,9 @@ export class EjemploListComponent {
     this.contenidoTabla = []
     this.dataSource = []
     this.rowsTabla = []
+    this.headersTabla2 = []
+    this.dataSource2 = []
+    this.rowsTabla2 = []
 
     let algorithm = new PriorityPreemptive();
     let scheduler = new Scheduler(algorithm);
@@ -298,7 +325,8 @@ export class EjemploListComponent {
       scheduler.run();
       this.headersTabla = scheduler.headers
       this.contenidoTabla = scheduler.rows
-      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
+      this.headersTabla2 = scheduler.headers2
+      this.rowsTabla2 = scheduler.rows2
 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
 
@@ -310,8 +338,9 @@ export class EjemploListComponent {
         }
         this.rowsTabla.push(row);
       }
-  
+
       this.dataSource = this.rowsTabla;
+      this.dataSource2 = this.rowsTabla2;
     }
 
   }
@@ -324,6 +353,9 @@ export class EjemploListComponent {
     this.contenidoTabla = []
     this.dataSource = []
     this.rowsTabla = []
+    this.headersTabla2 = []
+    this.dataSource2 = []
+    this.rowsTabla2 = []
 
     let algorithm = new RoundRobin(2);
     let scheduler = new Scheduler(algorithm);
@@ -356,7 +388,8 @@ export class EjemploListComponent {
       scheduler.run();
       this.headersTabla = scheduler.headers
       this.contenidoTabla = scheduler.rows
-      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
+      this.headersTabla2 = scheduler.headers2
+      this.rowsTabla2 = scheduler.rows2
 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
 
@@ -368,8 +401,9 @@ export class EjemploListComponent {
         }
         this.rowsTabla.push(row);
       }
-  
+
       this.dataSource = this.rowsTabla;
+      this.dataSource2 = this.rowsTabla2;
     }
 
   }
@@ -382,7 +416,19 @@ export class EjemploListComponent {
     this.scroller.scrollToAnchor("inicioTabla");
   }
 
-
+  getStyle(element: string): any {
+    if (element == '0') {
+      return { backgroundColor: 'black', color: 'black' };
+    } else if (element == '1') {
+      return { backgroundColor: '#F1C40F', color: '#F1C40F' };
+    } else if (element == '2') {
+      return { backgroundColor: '#27AE60', color: '#27AE60' };
+    } else if (element == '3') {
+      return { backgroundColor: '#F5CBA7', color: '#F5CBA7' };
+    } else if (element == '4') {
+      return { backgroundColor: '#E74C3C', color: '#E74C3C' };
+    }
+  }
 }
 
 

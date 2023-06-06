@@ -107,6 +107,10 @@ p.textoError {
   height: 20px;
 }
 
+.vertical-border td {
+  border-right: 1px solid #424242;
+}
+
 .red {
   background-color: #E74C3C;
 }

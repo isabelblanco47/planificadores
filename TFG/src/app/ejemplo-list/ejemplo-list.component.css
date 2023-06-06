@@ -82,6 +82,10 @@
   height: 20px;
 }
 
+.vertical-border td {
+  border-right: 1px solid #544175;
+}
+
 .red {
   background-color: #E74C3C;
 }

@@ -224,6 +224,19 @@
         </tr>
     </table>
 
+    <table mat-table *ngIf="generarTabla" [dataSource]="dataSource2" class="tabla-planificador vertical-border">
+
+        <ng-container *ngFor="let header of headersTabla2; let i = index" [matColumnDef]="header">
+            <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
+            <td mat-cell  *matCellDef="let element" [ngStyle]="getStyle(element[i])">
+                <span *ngIf="element[i] !== 'Task'">{{ element[i] }}</span></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="headersTabla2"></tr>
+        <tr mat-row *matRowDef="let row; columns: headersTabla2;"></tr>
+
+    </table> <br>
+
 
     <table mat-table *ngIf="generarTabla" [dataSource]="dataSource" class="tabla-planificador">
 
