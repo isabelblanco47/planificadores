@@ -188,20 +188,10 @@ export class EjemploListComponent {
       this.contenidoTabla = scheduler.rows
       this.headersTabla2 = scheduler.headers2
       this.rowsTabla2 = scheduler.rows2
+      console.warn("ROWS TABLA 2")
+      console.log(this.rowsTabla2)
 
-
-      // Imprimir tabla invertida
-
-      console.log("------TABLA 1 DATA------")
-      console.log("headers:::", this.headersTabla)
-      console.log("contenido:::", this.rowsTabla)
-      console.log()
-      console.log("------TABLA 2 DATA------")
-      console.log("headers:::", this.headersTabla2)
-      console.log("contenido:::", this.rowsTabla2)
-
-      //this.dataSource = new MatTableDataSource(this.contenidoTabla);
-
+      // Calculates length of each of the table's rows 
       const numRows = Math.ceil(this.contenidoTabla.length / this.headersTabla.length);
 
       for (let i = 0; i < numRows; i++) {

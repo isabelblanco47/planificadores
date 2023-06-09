@@ -315,16 +315,17 @@ export class Scheduler {
 
     printStatus(): void {
 
-        console.log("Clock t = " + this.clock);
         this.rows.push(this.clock)
-        
+
         if (!this.headersAdded) {
             this.headers2 = ["Task"]
             for (let i = 0; i < this.task_descriptors.length; i++) {
-                    this.headers.push("Task " + (i + 1))
-                    this.rows2.push(["Task "+ (i + 1)])
+                this.headers.push("Task " + (i + 1))
+                this.rows2.push(["Task " + (i + 1)])
 
-                }
+            }
+            this.rows2.push(["HD Task"])
+            this.rows2.push(["KB Task"])
         }
         this.headers2.push(this.clock.toString())
 
@@ -336,7 +337,6 @@ export class Scheduler {
 
             if (!this.headersAdded) {
                 this.headers = ["Clock time"]
-                
 
                 for (let i = 0; i < this.task_descriptors.length; i++) {
                     this.headers.push("Task " + (i + 1))
@@ -346,12 +346,11 @@ export class Scheduler {
                 this.headers.push("Keyboard Task")
                 this.headersAdded = true
             }
-            console.log("descriptor tcb command", descriptor.tcb.command)
             const soloDigitos = descriptor.tcb.command.match(/\d+/)?.[0] || "";
-            console.log("descriptor tcb command after", soloDigitos)
-            this.rows2[parseInt(soloDigitos)-1].push(descriptor.tcb.state)
+            this.rows2[parseInt(soloDigitos) - 1].push(descriptor.tcb.state)
 
-            
+
+
 
 
             // Print "Task <task_id> - <state>". State will be one of
@@ -362,19 +361,14 @@ export class Scheduler {
             // TERMINATED -> "terminated"
 
             if (descriptor.tcb.state === TaskState.RUNNING) {
-                console.log("Task " + descriptor.tcb.command + " - State: running");
                 this.rows.push("Running")
             } else if (descriptor.tcb.state === TaskState.READY) {
-                console.log("Task " + descriptor.tcb.command + " - State: ready");
                 this.rows.push("Ready");
             } else if (descriptor.tcb.state === TaskState.WAITING) {
-                console.log(descriptor.tcb.command + " - State: waiting");
                 this.rows.push("Waiting");
             } else if (descriptor.tcb.state === TaskState.TERMINATED) {
-                console.log("Task " + descriptor.tcb.command + " - State: terminated");
                 this.rows.push("Terminated");
             } else {
-                console.log("Task " + descriptor.tcb.command + " - State: inactive");
                 this.rows.push("Inactive");
             }
 
@@ -382,23 +376,24 @@ export class Scheduler {
         }
 
         let hard_disk_task = this.algorithm.getHardDiskTask();
+        let longitud = this.task_descriptors.length
 
         if (hard_disk_task !== null) {
-            console.log("Hard disk task: " + hard_disk_task.command);
             this.rows.push(hard_disk_task.command);
+            this.rows2[longitud].push(hard_disk_task.command)
         } else {
-            console.log("Hard disk task: none");
             this.rows.push("None");
+            this.rows2[longitud].push("None")
         }
 
         let keyboard_task = this.algorithm.getKeyboardTask();
 
         if (keyboard_task !== null) {
-            console.log("Keyboard task: " + keyboard_task.command);
             this.rows.push(keyboard_task.command);
+            this.rows2[longitud + 1].push(keyboard_task.command)
         } else {
-            console.log("Keyboard task: none");
             this.rows.push("None");
+            this.rows2[longitud + 1].push("None")
         }
 
 
