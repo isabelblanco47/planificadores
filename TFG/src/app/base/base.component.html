@@ -41,20 +41,20 @@
 
       </div>
     </mat-tab>
-    <mat-tab label="Algoritmo de Planificación Prioritaria: No Preventiva">
+    <mat-tab label="Algoritmo de Planificación por Prioridades: No expulsiva">
       <div class="texto1">
         <h3>
-          <mat-icon> library_books</mat-icon> Qué es Planificación Prioritaria No Preventiva
+          <mat-icon> library_books</mat-icon> Qué es Planificación por Prioridades No Expulsiva
         </h3>
         <mat-divider></mat-divider><br>
-        El algoritmo de planificación prioritaria no preventiva es un algoritmo de planificación de procesos en sistemas
+        El algoritmo de planificación por prioridades no expulsiva es un algoritmo de planificación de procesos en sistemas
         operativos donde cada proceso se asigna una prioridad y el proceso con la prioridad más alta se ejecuta primero.
         Si dos o más procesos tienen la misma prioridad, se pueden utilizar otros criterios, como el orden de llegada o
         el
         tiempo de ejecución previo, para determinar el orden de ejecución.<br>
         <br>
         A diferencia de los algoritmos de planificación preventiva, en los que el sistema operativo puede interrumpir un
-        proceso en cualquier momento, el algoritmo de planificación prioritaria no preventiva permite que los procesos
+        proceso en cualquier momento, el algoritmo de planificación por prioridades no expulsiva permite que los procesos
         se
         ejecuten hasta que se completen o se bloqueen voluntariamente. Esto significa que un proceso con una prioridad
         baja puede bloquear el sistema si se ejecuta por un período de tiempo prolongado y no se bloquea por sí solo.
@@ -64,7 +64,7 @@
         real, en los que la respuesta rápida es crucial, o en sistemas de control de procesos, donde se deben tomar
         decisiones rápidas en función de la entrada de sensores.<br>
 
-        <br>Sin embargo, el algoritmo de planificación prioritaria no preventiva tiene la desventaja de que los procesos
+        <br>Sin embargo, el algoritmo de planificación por prioridades no expulsiva tiene la desventaja de que los procesos
         de
         baja prioridad pueden experimentar una inanición (starvation) y nunca ser ejecutados si hay muchos procesos de
         alta prioridad que están en la cola de procesos. Por lo tanto, es importante tener cuidado al asignar
@@ -73,7 +73,7 @@
       </div>
       <div class="texto2">
         <h3>
-          <mat-icon> border_color</mat-icon> Ejemplo de Planificación Prioritaria No Preventiva
+          <mat-icon> border_color</mat-icon> Ejemplo de Planificación por Prioridades No Expulsiva
         </h3>
         <mat-divider></mat-divider><br>
         Supongamos que tenemos cinco procesos en espera de ser ejecutados en la CPU, y llegan en el siguiente orden: <br>
@@ -90,22 +90,22 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Algoritmo de Planificación Prioritaria: Preventiva">
+    <mat-tab label="Algoritmo de Planificación por Prioridades: Expulsiva">
       <div class="texto1">
         <h3>
-          <mat-icon> library_books</mat-icon> Qué es Planificación Prioritaria Preventiva
+          <mat-icon> library_books</mat-icon> Qué es Planificación por Prioridades Expulsiva
         </h3>
         <mat-divider></mat-divider><br>
-        El algoritmo de planificación prioritaria preventiva es un algoritmo de planificación de procesos en sistemas
+        El algoritmo de planificación por prioridades expulsiva es un algoritmo de planificación de procesos en sistemas
         operativos donde cada proceso se asigna una prioridad y el proceso con la prioridad más alta se ejecuta
         primero.
         Si dos o más procesos tienen la misma prioridad, se pueden utilizar otros criterios, como el orden de llegada
         o el
         tiempo de ejecución previo, para determinar el orden de ejecución.<br>
 
-        <br>A diferencia del algoritmo de planificación prioritaria no preventiva, en el que un proceso puede
+        <br>A diferencia del algoritmo de planificación por prioridades no expulsiva, en el que un proceso puede
         ejecutarse hasta
-        que se complete o se bloquee voluntariamente, en el algoritmo de planificación prioritaria preventiva, el
+        que se complete o se bloquee voluntariamente, en el algoritmo de planificación por prioridades expulsiva, el
         sistema
         operativo puede interrumpir un proceso en cualquier momento si un proceso de mayor prioridad llega a la cola
         de
@@ -116,11 +116,11 @@
         <br>Este algoritmo es útil en sistemas en los que se necesitan procesos de alta prioridad y se debe garantizar
         una
         respuesta rápida y predecible. Por ejemplo, en sistemas de control de tráfico aéreo, donde la seguridad es una
-        prioridad, se pueden utilizar algoritmos de planificación prioritaria preventiva para garantizar que los
+        prioridad, se pueden utilizar algoritmos de planificación por prioridades expulsiva para garantizar que los
         procesos
         críticos se ejecuten con prioridad y en tiempo real.<br>
 
-        <br>Sin embargo, el algoritmo de planificación prioritaria preventiva también tiene desventajas. En
+        <br>Sin embargo, el algoritmo de planificación por prioridades expulsiva también tiene desventajas. En
         particular, los
         procesos de baja prioridad pueden experimentar inanición si los procesos de alta prioridad continúan llegando
         a la
@@ -129,7 +129,7 @@
         su
         tiempo de espera en la cola de procesos.<br>
 
-        <br>En general, el algoritmo de planificación prioritaria preventiva es adecuado para sistemas en los que se
+        <br>En general, el algoritmo de planificación por prioridades expulsiva es adecuado para sistemas en los que se
         necesita
         una respuesta rápida y predecible, pero se debe tener cuidado al asignar prioridades para evitar la inanición
         de
@@ -137,7 +137,7 @@
       </div>
       <div class="texto2">
         <h3>
-          <mat-icon> border_color</mat-icon> Ejemplo de Planificación Prioritaria Preventiva
+          <mat-icon> border_color</mat-icon> Ejemplo de Planificación por Prioridades Expulsiva
         </h3>
         <mat-divider></mat-divider><br>
         Supongamos que tenemos cinco procesos en espera de ser ejecutados en la CPU, y llegan en el siguiente orden: <br>

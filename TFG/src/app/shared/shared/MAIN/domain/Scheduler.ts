@@ -383,7 +383,7 @@ export class Scheduler {
             this.rows2[longitud].push(hard_disk_task.command)
         } else {
             this.rows.push("None");
-            this.rows2[longitud].push("None")
+            this.rows2[longitud].push("")
         }
 
         let keyboard_task = this.algorithm.getKeyboardTask();
@@ -393,7 +393,7 @@ export class Scheduler {
             this.rows2[longitud + 1].push(keyboard_task.command)
         } else {
             this.rows.push("None");
-            this.rows2[longitud + 1].push("None")
+            this.rows2[longitud + 1].push("")
         }
 
 
